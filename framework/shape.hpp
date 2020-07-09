@@ -12,7 +12,7 @@ class Shape {
     std::string name() const;
     void name(std::string const& name);
     Color color() const;
-
+    virtual std::ostream& print(std::ostream& os) const;
     virtual float area() const = 0;
     virtual float volume() const = 0;
 

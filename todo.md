@@ -20,13 +20,13 @@
   - [x] Tests
 
 #### Aufgabe 5.3
-  - [ ] Shape -> name_
-  - [ ] Shape -> color_
-  - [ ] Anpassung aller Konstruktoren
+  - [x] Shape -> name_
+  - [x] Shape -> color_
+  - [x] Anpassung aller Konstruktoren
  
 #### Aufgabe 5.4
-  - [ ] Shape -> print( )
-  - [ ] Shape -> operator<<( )
+  - [x] Shape -> print( )
+  - [x] Shape -> operator <<( )
 
 #### Aufgabe 5.5
   - [ ] Box -> print( )

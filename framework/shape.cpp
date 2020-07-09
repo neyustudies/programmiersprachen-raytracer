@@ -21,3 +21,11 @@ void Shape::name(std::string const& name) {
 Color Shape::color() const {
   return color_;
 }
+
+std::ostream& Shape::print(std::ostream& os) const {
+  return os << "Shape:" << "\nName: " << name_ << ", \nColor: " << color_ ;
+}
+
+std::ostream& operator <<(std::ostream& os, Shape const& s) {
+  return s.print(os);
+}
