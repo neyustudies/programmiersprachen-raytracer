@@ -1,4 +1,5 @@
 #include "sphere.hpp"
+#include <cmath>
 
 Sphere::Sphere() :
   center_ {glm::vec3{}},
@@ -22,4 +23,12 @@ float Sphere::radius() const {
 
 void Sphere::radius(float r) {
   radius_ = r;
+}
+
+float Sphere::area() const {
+  return 4.0f * M_PI * std::pow(radius_, 2.0f);
+}
+
+float Sphere::volume() const {
+  return 4.0f / 3.0f * M_PI * std::pow(radius_, 3.0f);
 }
