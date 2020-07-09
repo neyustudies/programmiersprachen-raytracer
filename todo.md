@@ -14,10 +14,10 @@
   - [x] Shape -> radius( )
   - [x] Box -> min( )
   - [x] Box -> max( )
-  - [ ] Konstruktoren
-  - [ ] Implementierung area( )
-  - [ ] Implementierung volume( )
-  - [ ] Tests
+  - [x] Konstruktoren
+  - [x] Implementierung area( )
+  - [x] Implementierung volume( )
+  - [x] Tests
 
 #### Aufgabe 5.3
   - [ ] Shape -> name_
