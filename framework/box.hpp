@@ -7,10 +7,13 @@ class Box : public Shape {
 
   public:
     Box();
+    Box(glm::vec3 const& min, glm::vec3 const& max);
+    glm::vec3 min() const;
+    void min(glm::vec3 const& min);
+    glm::vec3 max() const;
+    void max(glm::vec3 const& max);
     float area() const;
     float volume() const;
-    glm::vec3 min() const;
-    glm::vec3 max() const;
 
   private:
     glm::vec3 min_;
