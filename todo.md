@@ -3,17 +3,17 @@
 ---
 
 #### Aufgabe 5.1
-  - [ ] abstrakte Baisklasse Shape
-  - [ ] Methode area( )
-  - [ ] Methode volume( )
+  - [x] abstrakte Baisklasse Shape
+  - [x] Methode area( )
+  - [x] Methode volume( )
 
 #### Aufgabe 5.2
-  - [ ] abgeleitete Klasse Box
-  - [ ] abgeleitete Klasse Sphere
-  - [ ] Shape -> center( )
-  - [ ] Shape -> radius( )
-  - [ ] Box -> min( )
-  - [ ] Box -> max( )
+  - [x] abgeleitete Klasse Box
+  - [x] abgeleitete Klasse Sphere
+  - [x] Shape -> center( )
+  - [x] Shape -> radius( )
+  - [x] Box -> min( )
+  - [x] Box -> max( )
   - [ ] Konstruktoren
   - [ ] Implementierung area( )
   - [ ] Implementierung volume( )
