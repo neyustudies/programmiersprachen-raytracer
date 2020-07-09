@@ -2,12 +2,24 @@
 #include <cmath>
 
 Box::Box() :
-  min_ {glm::vec3{}},
-  max_ {glm::vec3{}} {}
+  Shape {"Unnamed Box", {}},
+  min_  {glm::vec3{}},
+  max_  {glm::vec3{}} {}
 
 Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
-  min_ {min},
-  max_ {max} {}
+  Shape {"Unnamed Box", {}},
+  min_  {min},
+  max_  {max} {}
+
+Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name) :
+  Shape {name, {}},
+  min_  {min},
+  max_  {max} {}
+
+Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, Color const& clr) :
+  Shape {name,clr},
+  min_  {min},
+  max_  {max} {}
 
 glm::vec3 Box::min() const {
   return min_;
