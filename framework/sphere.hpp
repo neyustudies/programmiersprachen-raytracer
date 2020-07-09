@@ -7,11 +7,17 @@ class Sphere : public Shape {
 
   public:
     Sphere();
+    Sphere(glm::vec3 const& ctr, float r);
+    glm::vec3 center() const;
+    void center(glm::vec3 const& ctr);
+    float radius() const;
+    void radius(float r);
     float area() const;
     float volume() const;
-    float radius() const;
-    glm::vec3 center() const;
 
+  private:
+    glm::vec3 center_;
+    float radius_;
 
 
 };
