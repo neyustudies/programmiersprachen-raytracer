@@ -14,8 +14,9 @@ class Sphere : public Shape {
     void center(glm::vec3 const& ctr);
     float radius() const;
     void radius(float r);
-    float area() const;
-    float volume() const;
+    float area() const override;
+    float volume() const override;
+    std::ostream& print(std::ostream& os) const override;
 
   private:
     glm::vec3 center_;
