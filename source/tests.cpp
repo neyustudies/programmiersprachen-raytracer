@@ -88,6 +88,17 @@ TEST_CASE("construct a box object", "[constructor]" ) {
   REQUIRE(b4.color().b == 0.2f);
 }
 
+TEST_CASE("print a shape", "[print]") {
+  Sphere default_sphere{};
+  Box default_box{};
+  Sphere Sun{{30.f,30.f,30.f}, 10.f, "Sun", {0.2f,1.f,0.f}};
+  Box Moon{{1.f,5.f,2.f}, {4.3f, 6.f, 3.3f}, "Moon", {0.1f, 0.5f, 0.8f}};
+  default_sphere.print(std::cout);
+  default_box.print(std::cout);
+  Sun.print(std::cout);
+  Moon.print(std::cout);
+}
+
 TEST_CASE("intersect_ray_sphere", "[intersect]") {
   // Ray
   glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
