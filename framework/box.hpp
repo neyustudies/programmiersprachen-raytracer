@@ -14,8 +14,9 @@ class Box : public Shape {
     void min(glm::vec3 const& min);
     glm::vec3 max() const;
     void max(glm::vec3 const& max);
-    float area() const;
-    float volume() const;
+    float area() const override;
+    float volume() const override;
+    std::ostream& print(std::ostream& os) const override;
 
   private:
     glm::vec3 min_;
