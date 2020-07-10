@@ -1,4 +1,6 @@
 #define CATCH_CONFIG_RUNNER
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 #include <catch.hpp>
 #include "shape.hpp"
 #include "sphere.hpp"
@@ -14,22 +16,30 @@ TEST_CASE("default constructor sphere", "[default constructor]") {
   REQUIRE(s1.radius()   == 0.0f);
   REQUIRE(s1.area()     == 0.0f);
   REQUIRE(s1.volume()   == 0.0f);
+  REQUIRE(s1.name()     == "Unnamed Sphere");
+  REQUIRE(s1.color().r  == 0.0f);
+  REQUIRE(s1.color().g  == 0.0f);
+  REQUIRE(s1.color().b  == 0.0f);
 }
 
 TEST_CASE("default constructor box", "[default constructor]") {
   Box b1 = Box{};
 
-  REQUIRE(b1.max().x  == 0.0f);
-  REQUIRE(b1.max().y  == 0.0f);
-  REQUIRE(b1.min().x  == 0.0f);
-  REQUIRE(b1.min().y  == 0.0f);
-  REQUIRE(b1.area()   == 0.0f);
-  REQUIRE(b1.volume() == 0.0f);
+  REQUIRE(b1.max().x    == 0.0f);
+  REQUIRE(b1.max().y    == 0.0f);
+  REQUIRE(b1.min().x    == 0.0f);
+  REQUIRE(b1.min().y    == 0.0f);
+  REQUIRE(b1.area()     == 0.0f);
+  REQUIRE(b1.volume()   == 0.0f);
+  REQUIRE(b1.name()     == "Unnamed Box");
+  REQUIRE(b1.color().r  == 0.0f);
+  REQUIRE(b1.color().g  == 0.0f);
+  REQUIRE(b1.color().b  == 0.0f);
 }
 
 TEST_CASE("construct a sphere object", "[constructor]" ) {
   Sphere s2{{50, 40, 30}, 5};
-  Sphere s3{{1, 2, 3}, 4};
+  Sphere s3{{1, 2, 3}, 4, "Sphery", {0.3f,1.0f,0.2f}};
 
   REQUIRE(s2.center().x == 50.0f);
   REQUIRE(s2.center().y == 40.0f);
@@ -43,6 +53,10 @@ TEST_CASE("construct a sphere object", "[constructor]" ) {
   REQUIRE(s3.radius()   == 4.0f);
   REQUIRE(s3.area()     == Approx(201.06f));
   REQUIRE(s3.volume()   == Approx(268.08f));
+  REQUIRE(s3.name()     == "Sphery");
+  REQUIRE(s3.color().r  == 0.3f);
+  REQUIRE(s3.color().g  == 1.0f);
+  REQUIRE(s3.color().b  == 0.2f);
 }
 
 TEST_CASE("construct a box object", "[constructor]" ) {
@@ -51,23 +65,47 @@ TEST_CASE("construct a box object", "[constructor]" ) {
   glm::vec3 neg{-8, 100.f, -300.3};
   Box b2{small,small};
   Box b3{small,big};
-  Box b4{neg, small};
+  Box b4{neg, small, "Boxxy", {0.3f,1.0f,0.2f}};
 
-  REQUIRE(b2.max()    == small);
-  REQUIRE(b2.min()    == small);
-  REQUIRE(b2.max().x  == 1.0f);
-  REQUIRE(b2.max().y  == 1.0f);
-  REQUIRE(b2.max().z  == 3.0f);
-  REQUIRE(b3.min().x  == 1.0f);
-  REQUIRE(b3.min().y  == 1.0f);
-  REQUIRE(b3.min().z  == 3.0f);
-  REQUIRE(b3.area()   == 1590.0f);
-  REQUIRE(b3.volume() == 17671796.0f);
-  REQUIRE(b4.max().x  == 1.0f);
-  REQUIRE(b4.max().y  == 1.0f);
-  REQUIRE(b4.max().z  == 3.0f);
-  REQUIRE(b4.area()   == Approx(822.6f));
-  REQUIRE(b4.volume() == Approx(270240.3f));
+  REQUIRE(b2.max()     == small);
+  REQUIRE(b2.min()     == small);
+  REQUIRE(b2.max().x   == 1.0f);
+  REQUIRE(b2.max().y   == 1.0f);
+  REQUIRE(b2.max().z   == 3.0f);
+  REQUIRE(b3.min().x   == 1.0f);
+  REQUIRE(b3.min().y   == 1.0f);
+  REQUIRE(b3.min().z   == 3.0f);
+  REQUIRE(b3.area()    == 1590.0f);
+  REQUIRE(b3.volume()  == 17671796.0f);
+  REQUIRE(b4.max().x   == 1.0f);
+  REQUIRE(b4.max().y   == 1.0f);
+  REQUIRE(b4.max().z   == 3.0f);
+  REQUIRE(b4.area()    == Approx(822.6f));
+  REQUIRE(b4.volume()  == Approx(270240.3f));
+  REQUIRE(b4.name()    == "Boxxy");
+  REQUIRE(b4.color().r == 0.3f);
+  REQUIRE(b4.color().g == 1.0f);
+  REQUIRE(b4.color().b == 0.2f);
+}
+
+TEST_CASE("intersect_ray_sphere", "[intersect]") {
+  // Ray
+  glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
+  // ray direction has to be normalized !
+  // you can use:
+  // v = glm::normalize(some_vector)
+  glm::vec3 ray_direction{0.0f, 0.0f, 1.0f};
+
+  // Sphere
+  glm::vec3 sphere_center{0.0f ,0.0f, 5.0f};
+  float sphere_radius{1.0f};
+  float distance = 0.0f;
+  auto result = glm::intersectRaySphere(
+                ray_origin, ray_direction,
+                sphere_center,
+                sphere_radius * sphere_radius, // squared radius !!!
+                distance);
+  REQUIRE(distance == Approx(4.0f));
 }
 
 int main(int argc, char *argv[])
