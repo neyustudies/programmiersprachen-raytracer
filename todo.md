@@ -29,23 +29,23 @@
   - [x] Shape -> operator <<( )
 
 #### Aufgabe 5.5
-  - [ ] Box -> print( )
-  - [ ] Sphere -> print( )
-  - [ ] Output Objekte beider Klassen
-  - [ ] Schlüsselwort override verwenden
+  - [x] Box -> print( )
+  - [x] Sphere -> print( )
+  - [x] Output Objekte beider Klassen
+  - [x] Schlüsselwort override verwenden
 
 #### Aufgabe 5.6
-  - [ ] tests.cpp -> Testcase
-  - [ ] framework -> struct Ray
-  - [ ] Sphere -> intersect( )
-  - [ ] source -> hpp struct HitPoint
-  - [ ] hitpoint -> Attribut "wurde geschnitten" (boolean)
-  - [ ] hitpoint -> Attribut "welche Distanz" (t)
-  - [ ] hitpoint -> Attribut "Objektename" (name_)
-  - [ ] hitpoint -> Atribut "Objektfarbe" (color_)
+  - [x] tests.cpp -> Testcase
+  - [x] framework -> struct Ray
+  - [x] Sphere -> intersect( )
+  - [x] source -> hpp struct HitPoint
+  - [x] hitpoint -> Attribut "wurde geschnitten" (boolean)
+  - [x] hitpoint -> Attribut "welche Distanz" (t)
+  - [x] hitpoint -> Attribut "Objektename" (name_)
+  - [x] hitpoint -> Atribut "Objektfarbe" (color_)
   - [ ] hitpoint -> Attribut "3D Punkt des Schnitts" (vec3D)
   - [ ] hitpoint -> Attribut "Richtung des Strahls" (direction)
-  - [ ] Tests
+  - [x] Tests
 
 #### Aufgabe 5.7
   - [ ] Beispielcode

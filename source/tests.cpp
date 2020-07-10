@@ -9,7 +9,6 @@
 
 TEST_CASE("default constructor sphere", "[default constructor]") {
   Sphere s1 = Sphere{};
-
   REQUIRE(s1.center().x == 0.0f);
   REQUIRE(s1.center().y == 0.0f);
   REQUIRE(s1.center().z == 0.0f);
@@ -24,7 +23,6 @@ TEST_CASE("default constructor sphere", "[default constructor]") {
 
 TEST_CASE("default constructor box", "[default constructor]") {
   Box b1 = Box{};
-
   REQUIRE(b1.max().x    == 0.0f);
   REQUIRE(b1.max().y    == 0.0f);
   REQUIRE(b1.min().x    == 0.0f);
@@ -40,7 +38,6 @@ TEST_CASE("default constructor box", "[default constructor]") {
 TEST_CASE("construct a sphere object", "[constructor]" ) {
   Sphere s2{{50, 40, 30}, 5};
   Sphere s3{{1, 2, 3}, 4, "Sphery", {0.3f,1.0f,0.2f}};
-
   REQUIRE(s2.center().x == 50.0f);
   REQUIRE(s2.center().y == 40.0f);
   REQUIRE(s2.center().z == 30.0f);
@@ -66,7 +63,6 @@ TEST_CASE("construct a box object", "[constructor]" ) {
   Box b2{small,small};
   Box b3{small,big};
   Box b4{neg, small, "Boxxy", {0.3f,1.0f,0.2f}};
-
   REQUIRE(b2.max()     == small);
   REQUIRE(b2.min()     == small);
   REQUIRE(b2.max().x   == 1.0f);
@@ -117,6 +113,20 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
                 sphere_radius * sphere_radius, // squared radius !!!
                 distance);
   REQUIRE(distance == Approx(4.0f));
+}
+
+TEST_CASE("interect sphere", "[intersect]") {
+  Sphere sphere{{0,0,4},2,"Kugel",{1,0.1f,0.2f}};
+  Ray ray{{0,0,0},{0,0,1}};
+  HitPoint result = sphere.intersect(ray,4);
+  REQUIRE(result.isIntersected);
+  REQUIRE(result.t == 2.0f);
+  REQUIRE(result.name == "Kugel");
+  REQUIRE(result.clr.r == 1.0f);
+  REQUIRE(result.clr.g == 0.1f);
+  REQUIRE(result.clr.b == 0.2f);
+  //REQUIRE(result.point == glm::vec3(0.0f, 0.0f, 4.0f));
+  //REQUIRE(result.direction == glm::vec3(0.0f, 0.0f, 4.0f));
 }
 
 int main(int argc, char *argv[])
