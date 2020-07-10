@@ -45,6 +45,13 @@ float Sphere::volume() const {
   return 4.0f / 3.0f * M_PI * std::pow(radius_, 3.0f);
 }
 
+HitPoint Sphere::intersect(Ray const& ray, float t) const {
+  bool result = glm::intersectRaySphere(
+                ray.origin, ray.direction,
+                center_, radius_ * radius_, t);
+  return HitPoint{result, t, name_, color_, ray.origin + t * ray.direction, ray.direction};
+}
+
 std::ostream& Sphere::print(std::ostream& os) const {
   Shape::print(os);
   return os << "Center:  (" << center_.x << ", " << center_.y << ", " << center_.z 
