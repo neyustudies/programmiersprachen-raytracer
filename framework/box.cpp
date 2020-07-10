@@ -49,12 +49,6 @@ float Box::volume() const {
          std::abs(max_.z - min_.z);
 }
 
-/* std::ostream& Box::print(std::ostream& os) const {
-  Shape::print(os);
-  return os << "Minimum: (" << min_.x << ", " << min_.y << ", " << min_.z 
-            << ")\nMaximum: (" << max_.x << ", " << max_.y << ", " << max_.z << ")\n";
-} */
-
 std::ostream& Box::print(std::ostream& os) const {
   Shape::print(os);
   return os << "Minimum: (" << min_.x << "," << min_.y << "," << min_.z 

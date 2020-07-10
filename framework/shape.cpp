@@ -23,7 +23,7 @@ Color Shape::color() const {
 }
 
 std::ostream& Shape::print(std::ostream& os) const {
-  return os << "Shape:" << "\nName: " << name_ << ", \nColor: " << color_ ;
+  return os << "\nShape\n-----\n" << "Name:    " << name_ << "\nColor:   " << color_;
 }
 
 std::ostream& operator <<(std::ostream& os, Shape const& s) {
