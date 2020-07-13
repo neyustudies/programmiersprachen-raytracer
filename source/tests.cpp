@@ -116,17 +116,21 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
 }
 
 TEST_CASE("interect sphere", "[intersect]") {
-  Sphere sphere{{0,0,4},2,"Kugel",{1,0.1f,0.2f}};
-  Ray ray{{0,0,0},{0,0,1}};
+  Sphere sphere{{1,2,4},2,"Kugel",{1,0.1f,0.2f}};
+  Ray ray{{1,0,2},{0,0,2}};
   HitPoint result = sphere.intersect(ray,4);
   REQUIRE(result.isIntersected);
-  REQUIRE(result.t == 2.0f);
-  REQUIRE(result.name == "Kugel");
-  REQUIRE(result.clr.r == 1.0f);
-  REQUIRE(result.clr.g == 0.1f);
-  REQUIRE(result.clr.b == 0.2f);
-  //REQUIRE(result.point == glm::vec3(0.0f, 0.0f, 4.0f));
-  //REQUIRE(result.direction == glm::vec3(0.0f, 0.0f, 4.0f));
+  REQUIRE(result.t           == 2.0f);
+  REQUIRE(result.name        == "Kugel");
+  REQUIRE(result.clr.r       == 1.0f);
+  REQUIRE(result.clr.g       == 0.1f);
+  REQUIRE(result.clr.b       == 0.2f);
+  REQUIRE(result.point.x     == 1.0f);
+  REQUIRE(result.point.y     == 0.0f);
+  REQUIRE(result.point.z     == 6.0f);
+  REQUIRE(result.direction.x == 0.0f);
+  REQUIRE(result.direction.y == 0.0f);
+  REQUIRE(result.direction.z == 2.0f);
 }
 
 int main(int argc, char *argv[])

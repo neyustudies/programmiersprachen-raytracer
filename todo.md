@@ -43,8 +43,8 @@
   - [x] hitpoint -> Attribut "welche Distanz" (t)
   - [x] hitpoint -> Attribut "Objektename" (name_)
   - [x] hitpoint -> Atribut "Objektfarbe" (color_)
-  - [ ] hitpoint -> Attribut "3D Punkt des Schnitts" (vec3D)
-  - [ ] hitpoint -> Attribut "Richtung des Strahls" (direction)
+  - [x] hitpoint -> Attribut "3D Punkt des Schnitts" (vec3D)
+  - [x] hitpoint -> Attribut "Richtung des Strahls" (direction)
   - [x] Tests
 
 #### Aufgabe 5.7
