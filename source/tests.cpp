@@ -133,6 +133,26 @@ TEST_CASE("interect sphere", "[intersect]") {
   REQUIRE(result.direction.z == 2.0f);
 }
 
+TEST_CASE("example code, dynamic vs static", "[task 5.7]") {
+  Color red{255, 0, 0};
+  glm::vec3 position{0.0f, 0.0f, 0.0f};
+  std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>(position, 1.2f, "sphere0", red);
+  std::shared_ptr<Shape> s2 = std::make_shared<Sphere>(position, 1.2f, "sphere1", red);
+  //s1->print(std::cout); 
+  //s2->print(std::cout);
+}
+
+TEST_CASE("example code, destructor", "[task 5.8]") {
+  Color red{255, 0, 0};
+  glm::vec3 position{0.0f, 0.0f, 0.0f};
+  Sphere* s1 = new Sphere{position, 1.2f,  "sphere0", red}; 
+  Shape* s2 = new Sphere{position, 1.2f, "sphere1", red};
+  //s1->print(std::cout); 
+  //s2->print(std::cout);
+  delete s1; 
+  delete s2;
+}
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
