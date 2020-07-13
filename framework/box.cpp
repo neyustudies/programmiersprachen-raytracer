@@ -21,6 +21,8 @@ Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, Co
   min_  {min},
   max_  {max} {}
 
+Box::~Box() {}
+
 glm::vec3 Box::min() const {
   return min_;
 }

@@ -8,7 +8,8 @@ class Shape {
   public:
     Shape();
     Shape(std::string const& name);
-    Shape(std::string const& name, Color const& clr); 
+    Shape(std::string const& name, Color const& clr);
+    virtual ~Shape();
     std::string name() const;
     void name(std::string const& name);
     Color color() const;

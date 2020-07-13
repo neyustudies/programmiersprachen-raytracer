@@ -10,6 +10,8 @@ Shape::Shape(std::string const& name, Color const& clr) :
   name_ {name},
   color_{clr} {}
 
+Shape::~Shape() {}
+
 std::string Shape::name() const {
   return name_;
 }

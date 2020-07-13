@@ -48,14 +48,14 @@
   - [x] Tests
 
 #### Aufgabe 5.7
-  - [ ] Beispielcode
+  - [x] Beispielcode
 
 #### Aufgabe 5.8
-  - [ ] Shape -> Destruktor
-  - [ ] Testcase -> Programmcode
+  - [x] Shape -> Destruktor
+  - [x] Testcase -> Programmcode
 
 #### Aufgabe 5.9
-  - [ ] Erklärung
+  - [x] Erklärung
 
 ---
 

@@ -21,6 +21,8 @@ Sphere::Sphere(glm::vec3 const& ctr, float r, std::string const& name, Color con
   center_ {ctr},
   radius_ {r} {}
 
+Sphere::~Sphere() {}
+
 glm::vec3 Sphere::center() const {
   return center_;
 }
