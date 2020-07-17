@@ -115,22 +115,55 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
   REQUIRE(distance == Approx(4.0f));
 }
 
-TEST_CASE("interect sphere", "[intersect]") {
-  Sphere sphere{{1,2,4},2,"Kugel",{1,0.1f,0.2f}};
-  Ray ray{{1,0,2},{0,0,2}};
-  HitPoint result = sphere.intersect(ray,4);
-  REQUIRE(result.isIntersected);
-  REQUIRE(result.t == 2.0f);
-  REQUIRE(result.name == "Kugel");
-  REQUIRE(result.clr.r == 1.0f);
-  REQUIRE(result.clr.g == 0.1f);
-  REQUIRE(result.clr.b == 0.2f);
-  REQUIRE(result.point.x == 1.0f);
-  REQUIRE(result.point.y == 0.0f);
-  REQUIRE(result.point.z == 6.0f);
-  REQUIRE(result.direction.x == 0.0f);
-  REQUIRE(result.direction.y == 0.0f);
-  REQUIRE(result.direction.z == 2.0f);
+TEST_CASE("intersect sphere", "[intersect]") {
+  SECTION("sphere with center, radius, name, color") {
+    Sphere sphere{{1,2,4},2,"Kugel",{1,0.1f,0.2f}};
+    Ray ray{{1,0,2},{0,0,2}};
+    HitPoint result = sphere.intersect(ray,4);
+    REQUIRE(result.isIntersected);
+    REQUIRE(result.t == 2.0f);
+    REQUIRE(result.name == "Kugel");
+    REQUIRE(result.clr.r == 1.0f);
+    REQUIRE(result.clr.g == 0.1f);
+    REQUIRE(result.clr.b == 0.2f);
+    REQUIRE(result.point.x == 1.0f);
+    REQUIRE(result.point.y == 0.0f);
+    REQUIRE(result.point.z == 6.0f);
+    REQUIRE(result.direction.x == 0.0f);
+    REQUIRE(result.direction.y == 0.0f);
+    REQUIRE(result.direction.z == 2.0f);
+  }
+  SECTION("sphere without name and color") {
+    Sphere noname{{1,2,4},2};
+    Ray ray{{1,0,2},{0,0,2}};
+    HitPoint hit = noname.intersect(ray,4);
+    REQUIRE(hit.isIntersected);
+    REQUIRE(hit.t == 2.0f);
+    REQUIRE(hit.name == "Unnamed Sphere");
+    REQUIRE(hit.clr.r == 0.0f);
+    REQUIRE(hit.clr.g == 0.0f);
+    REQUIRE(hit.clr.b == 0.0f);
+    REQUIRE(hit.point.x == 1.0f);
+    REQUIRE(hit.point.y == 0.0f);
+    REQUIRE(hit.point.z == 6.0f);
+    REQUIRE(hit.direction.x == 0.0f);
+    REQUIRE(hit.direction.y == 0.0f);
+    REQUIRE(hit.direction.z == 2.0f);
+  }
+  SECTION("sphere that is not hit") {
+    Sphere sphere{{1,2,4},2,"Kugel",{1,0.1f,0.2f}};
+    Ray ray{{1,8,2},{0,0,2}};
+    HitPoint nohit = sphere.intersect(ray,2);
+    REQUIRE_FALSE(nohit.isIntersected);
+    REQUIRE(nohit.t == 2.0f);
+    REQUIRE(nohit.name == "Kugel");
+    REQUIRE(nohit.point.x == 1.0f);
+    REQUIRE(nohit.point.y == 8.0f);
+    REQUIRE(nohit.point.z == 6.0f);
+    REQUIRE(nohit.direction.x == 0.0f);
+    REQUIRE(nohit.direction.y == 0.0f);
+    REQUIRE(nohit.direction.z == 2.0f);
+  }
 }
 
 TEST_CASE("example code, dynamic vs static", "[task 5.7]") {
