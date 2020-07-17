@@ -180,8 +180,8 @@ TEST_CASE("example code, destructor", "[task 5.8]") {
   glm::vec3 position{0.0f, 0.0f, 0.0f};
   Sphere* s1 = new Sphere{position, 1.2f,  "sphere0", red}; 
   Shape* s2 = new Sphere{position, 1.2f, "sphere1", red};
-  //s1->print(std::cout); 
-  //s2->print(std::cout);
+  s1->print(std::cout); 
+  s2->print(std::cout);
   delete s1; 
   delete s2;
 }
