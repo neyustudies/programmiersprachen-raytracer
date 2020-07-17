@@ -56,7 +56,7 @@ HitPoint Sphere::intersect(Ray const& ray, float t) const {
 
 std::ostream& Sphere::print(std::ostream& os) const {
   Shape::print(os);
-  return os << "Center:  (" << center_.x << ", " << center_.y << ", " << center_.z 
+  return os << "Center:  (" << center_.x << "," << center_.y << "," << center_.z 
             << ")\nRadius:  " << radius_ << "\nArea:    " << area() 
             << "\nVolume:  " << volume() << "\n";
 }
