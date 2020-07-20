@@ -27,16 +27,8 @@ glm::vec3 Box::min() const {
   return min_;
 }
 
-void Box::min(glm::vec3 const& min) {
-  min_ = min;
-}
-
 glm::vec3 Box::max() const {
   return max_;
-}
-
-void Box::max(glm::vec3 const& max) {
-  max_ = max;
 }
 
 float Box::area() const {

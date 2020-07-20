@@ -16,10 +16,6 @@ std::string Shape::name() const {
   return name_;
 }
 
-void Shape::name(std::string const& name) {
-  name_ = name;
-}
-
 Color Shape::color() const {
   return color_;
 }

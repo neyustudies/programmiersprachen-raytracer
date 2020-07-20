@@ -27,16 +27,8 @@ glm::vec3 Sphere::center() const {
   return center_;
 }
 
-void Sphere::center(glm::vec3 const& ctr) {
-  center_ = ctr;
-}
-
 float Sphere::radius() const {
   return radius_;
-}
-
-void Sphere::radius(float r) {
-  radius_ = r;
 }
 
 float Sphere::area() const {
