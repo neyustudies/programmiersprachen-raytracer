@@ -5,6 +5,7 @@
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp" 
+#include "sdfparser.hpp"
 
 
 TEST_CASE("default constructor sphere", "[default constructor]") {
@@ -184,6 +185,12 @@ TEST_CASE("example code, destructor", "[task 5.8]") {
   s2->print(std::cout);
   delete s1; 
   delete s2;
+}
+
+TEST_CASE("sdf_parser", "[sdf]") {
+  auto s = read_from_sdf_file("");
+  REQUIRE(s.shapes.empty());
+  REQUIRE(s.lights.empty());
 }
 
 int main(int argc, char *argv[])
