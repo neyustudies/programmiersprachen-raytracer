@@ -10,6 +10,7 @@ class Box : public Shape {
     Box(glm::vec3 const& min, glm::vec3 const& max);
     Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name);
     Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, Color const& clr);
+    Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, std::shared_ptr<Material> const& material);
     ~Box();
     glm::vec3 min() const;
     glm::vec3 max() const;
