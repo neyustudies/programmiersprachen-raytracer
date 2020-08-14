@@ -10,6 +10,10 @@ Shape::Shape(std::string const& name, Color const& clr) :
   name_ {name},
   color_{clr} {}
 
+Shape::Shape(std::string const& name, std::shared_ptr<Material> const& material) :
+  name_ {name},
+  material_ {material} {}
+
 Shape::~Shape() {}
 
 std::string Shape::name() const {
