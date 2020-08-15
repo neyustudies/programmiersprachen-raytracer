@@ -5,7 +5,16 @@ add_dependencies(example glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
 install(TARGETS example DESTINATION .)
 
-add_executable(raytracer raytracer.cpp)
+add_executable(raytracer raytracer.cpp
+  ../framework/window.cpp
+  ../framework/renderer.cpp
+  ../framework/shape.cpp
+  ../framework/sphere.cpp
+  ../framework/box.cpp
+  ../framework/material.cpp
+  ../framework/camera.cpp
+  ../framework/ppmwriter.cpp
+  ../framework/pixel.cpp)
 
 target_link_libraries(raytracer ${FRAMEWORK_NAME} ${LIBRARIES}
   glfw
@@ -20,7 +29,9 @@ add_executable(tests
   tests.cpp
   ../framework/shape.cpp
   ../framework/sphere.cpp 
-  ../framework/box.cpp)
+  ../framework/box.cpp
+  ../framework/material.cpp
+  ../framework/camera.cpp)
 add_dependencies(tests glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 target_link_libraries(tests ${GLFW_LIBRARIES})
 
