@@ -18,9 +18,6 @@ TEST_CASE("default constructor sphere", "[default constructor]") {
   REQUIRE(s1.area() == 0.0f);
   REQUIRE(s1.volume() == 0.0f);
   REQUIRE(s1.name() == "Unnamed Sphere");
-  REQUIRE(s1.color().r == 0.0f);
-  REQUIRE(s1.color().g == 0.0f);
-  REQUIRE(s1.color().b == 0.0f);
 }
 
 TEST_CASE("default constructor box", "[default constructor]") {
@@ -32,9 +29,6 @@ TEST_CASE("default constructor box", "[default constructor]") {
   REQUIRE(b1.area() == 0.0f);
   REQUIRE(b1.volume() == 0.0f);
   REQUIRE(b1.name() == "Unnamed Box");
-  REQUIRE(b1.color().r == 0.0f);
-  REQUIRE(b1.color().g == 0.0f);
-  REQUIRE(b1.color().b == 0.0f);
 }
 
 TEST_CASE("construct a sphere object", "[constructor]" ) {
@@ -53,9 +47,6 @@ TEST_CASE("construct a sphere object", "[constructor]" ) {
   REQUIRE(s3.area() == Approx(201.06f));
   REQUIRE(s3.volume() == Approx(268.08f));
   REQUIRE(s3.name() == "Sphery");
-  REQUIRE(s3.color().r == 0.3f);
-  REQUIRE(s3.color().g == 1.0f);
-  REQUIRE(s3.color().b == 0.2f);
 }
 
 TEST_CASE("construct a box object", "[constructor]" ) {
@@ -81,9 +72,6 @@ TEST_CASE("construct a box object", "[constructor]" ) {
   REQUIRE(b4.area() == Approx(822.6f));
   REQUIRE(b4.volume() == Approx(270240.3f));
   REQUIRE(b4.name() == "Boxxy");
-  REQUIRE(b4.color().r == 0.3f);
-  REQUIRE(b4.color().g == 1.0f);
-  REQUIRE(b4.color().b == 0.2f);
 }
 
 TEST_CASE("print a shape", "[print]") {
@@ -142,9 +130,6 @@ TEST_CASE("intersect sphere", "[intersect]") {
     REQUIRE(hit.isIntersected);
     REQUIRE(hit.t == 2.0f);
     REQUIRE(hit.name == "Unnamed Sphere");
-    REQUIRE(hit.clr.r == 0.0f);
-    REQUIRE(hit.clr.g == 0.0f);
-    REQUIRE(hit.clr.b == 0.0f);
     REQUIRE(hit.point.x == 1.0f);
     REQUIRE(hit.point.y == 0.0f);
     REQUIRE(hit.point.z == 6.0f);
@@ -225,7 +210,7 @@ TEST_CASE("material constructor", "[material]") {
   }
 }
 
-/* TEST_CASE("shapes with material", "[shapes]") {
+ TEST_CASE("shapes with material", "[shapes]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f}, 10.0f);
@@ -263,7 +248,7 @@ TEST_CASE("material constructor", "[material]") {
     REQUIRE(s2.material()->m    == 10.0f);
     REQUIRE(s2.material()->name.compare("Test") == 0);
   }
-} */
+} 
 
 int main(int argc, char *argv[])
 {
