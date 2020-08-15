@@ -6,6 +6,7 @@
 #include "sphere.hpp"
 #include "box.hpp" 
 #include "sdfparser.hpp"
+#include "material.hpp"
 
 
 TEST_CASE("default constructor sphere", "[default constructor]") {
@@ -188,9 +189,80 @@ TEST_CASE("example code, destructor", "[task 5.8]") {
 }
 
 TEST_CASE("sdf_parser", "[sdf]") {
-  auto s = read_from_sdf_file("");
+  auto s = read_from_sdf("");
   REQUIRE(s.shapes.empty());
   REQUIRE(s.lights.empty());
+}
+
+TEST_CASE("material constructor", "[material]") {
+  SECTION("default material") {
+    Material m1{};
+    REQUIRE(m1.name.compare("Unnamed Material") == 0);
+    REQUIRE(m1.ka.r == 0.0f);
+    REQUIRE(m1.ka.g == 0.0f);
+    REQUIRE(m1.ka.b == 0.0f);
+    REQUIRE(m1.kd.r == 0.0f);
+    REQUIRE(m1.kd.g == 0.0f);
+    REQUIRE(m1.kd.b == 0.0f);
+    REQUIRE(m1.ks.r == 0.0f);
+    REQUIRE(m1.ks.g == 0.0f);
+    REQUIRE(m1.ks.b == 0.0f);
+    REQUIRE(m1.m    == 1.0f);
+  }
+  SECTION("material with given values") {
+    Material m2{"Test", {0.7f, 0.1f, 0.2f}, {1.0f, 0.9f, 1.1f}, {0.0f, 0.1f, 0.2f}, 10.0f};
+    REQUIRE(m2.name.compare("Test") == 0);
+    REQUIRE(m2.ka.r == 0.7f);
+    REQUIRE(m2.ka.g == 0.1f);
+    REQUIRE(m2.ka.b == 0.2f);
+    REQUIRE(m2.kd.r == 1.0f);
+    REQUIRE(m2.kd.g == 0.9f);
+    REQUIRE(m2.kd.b == 1.1f);
+    REQUIRE(m2.ks.r == 0.0f);
+    REQUIRE(m2.ks.g == 0.1f);
+    REQUIRE(m2.ks.b == 0.2f);
+    REQUIRE(m2.m    == 10.0f);
+  }
+}
+
+TEST_CASE("shapes with material", "[shapes]") {
+  auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
+                                               Color{0.1f, 0.4f, 0.9f}, 
+                                               Color{0.0f, 0.5f, 0.6f}, 10.0f);
+  SECTION("box constructor with material") {
+    Box b1{};
+    REQUIRE(b1.material() == nullptr);
+    Box b2{{}, {}, "Box", m1};
+    REQUIRE(b2.name().compare("Box") == 0);
+    REQUIRE(b2.material()->ka.r == 0.2f);
+    REQUIRE(b2.material()->ka.g == 0.3f);
+    REQUIRE(b2.material()->ka.b == 0.8f);
+    REQUIRE(b2.material()->kd.r == 0.1f);
+    REQUIRE(b2.material()->kd.g == 0.4f);
+    REQUIRE(b2.material()->kd.b == 0.9f);
+    REQUIRE(b2.material()->ks.r == 0.0f);
+    REQUIRE(b2.material()->ks.g == 0.5f);
+    REQUIRE(b2.material()->ks.b == 0.6f);
+    REQUIRE(b2.material()->m    == 10.0f);
+    REQUIRE(b2.material()->name.compare("Test") == 0);
+  }
+  SECTION("sphere constructor with material") {
+    Sphere s1{};
+    REQUIRE(s1.material() == nullptr);
+    Sphere s2{{}, {}, "Kugel", m1};
+    REQUIRE(s2.name().compare("Kugel") == 0);
+    REQUIRE(s2.material()->ka.r == 0.2f);
+    REQUIRE(s2.material()->ka.g == 0.3f);
+    REQUIRE(s2.material()->ka.b == 0.8f);
+    REQUIRE(s2.material()->kd.r == 0.1f);
+    REQUIRE(s2.material()->kd.g == 0.4f);
+    REQUIRE(s2.material()->kd.b == 0.9f);
+    REQUIRE(s2.material()->ks.r == 0.0f);
+    REQUIRE(s2.material()->ks.g == 0.5f);
+    REQUIRE(s2.material()->ks.b == 0.6f);
+    REQUIRE(s2.material()->m    == 10.0f);
+    REQUIRE(s2.material()->name.compare("Test") == 0);
+  }
 }
 
 int main(int argc, char *argv[])
