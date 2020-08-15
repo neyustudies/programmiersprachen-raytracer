@@ -8,10 +8,10 @@ struct HitPoint {
 
   bool isIntersected  = false;
   float t             = 0.0f;
-  std::string name;
-  Color clr;
-  glm::vec3 point;
-  glm::vec3 direction;
+  std::string name    = "";
+  Color clr           = {0.0f, 0.0f, 0.0f};
+  glm::vec3 point     = {0.0f, 0.0f, 0.0f};
+  glm::vec3 direction = {0.0f, 0.0f, 0.0f};
 
 };
 
