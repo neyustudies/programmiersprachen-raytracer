@@ -225,7 +225,7 @@ TEST_CASE("material constructor", "[material]") {
   }
 }
 
-TEST_CASE("shapes with material", "[shapes]") {
+/* TEST_CASE("shapes with material", "[shapes]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f}, 10.0f);
@@ -263,7 +263,7 @@ TEST_CASE("shapes with material", "[shapes]") {
     REQUIRE(s2.material()->m    == 10.0f);
     REQUIRE(s2.material()->name.compare("Test") == 0);
   }
-}
+} */
 
 int main(int argc, char *argv[])
 {
