@@ -3,6 +3,7 @@
 #include "color.hpp"
 #include "material.hpp"
 #include <string>
+#include <memory>
 
 class Shape {
 
