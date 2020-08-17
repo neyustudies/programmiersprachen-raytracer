@@ -51,6 +51,11 @@ struct Color
     return tmp;
   }
 
+  friend bool operator==(Color const &a, Color const &b) {
+    return (a.r == b.r) && (a.g == b.g) && (a.b == b.b);
+  }
+
+
   float r;
   float g;
   float b;
