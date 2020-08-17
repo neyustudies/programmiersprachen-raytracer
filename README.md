@@ -1,6 +1,18 @@
-Programmiersprachen: Raytracer
-===========
+# Programmiersprachen: Raytracer
 
-[![Build Status](https://secure.travis-ci.org/vrsys/programmiersprachen-raytracer.png)](http://travis-ci.org/vrsys/programmiersprachen-raytracer)
+## dependencies
+```
+cmake
+xorg-dev
+libglu1-mesa-dev
+freeglut3-dev
+libxi-dev
+libxrandr-dev
+```
 
-Framework for exercise 07.
+## building
+```
+mkdir build
+cmake ..
+make
+```
