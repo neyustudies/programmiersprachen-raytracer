@@ -39,5 +39,12 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(mat_blue == *(sphere->material()));
 
     REQUIRE(1 == s.lights.size());
+    auto light = s.lights[0];
+    REQUIRE("sun" == light.name);
+    glm::vec3 pos{1000, 700, 0};
+    REQUIRE(pos == light.pos);
+    Color color{.2, .2, .2};
+    REQUIRE(color == light.color);
+    REQUIRE(100.f == Approx(light.brightness));
   }
 }

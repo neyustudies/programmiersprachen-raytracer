@@ -76,7 +76,14 @@ Scene read_from_sdf(std::string const& filename) {
           warn_unknown("shape", object_name, line);
         }
       } else if ("light" == class_name) {
+        auto pos = parse_vec3(in);
+        auto color = parse_color(in);
+        float brightness;
+        in >> brightness;
+        Light light{object_name, pos, color, brightness};
+        scene.lights.push_back(light);
       } else if ("camera" == class_name) {
+        // TODO
       } else {
         warn_unknown("class", class_name, line);
       }
