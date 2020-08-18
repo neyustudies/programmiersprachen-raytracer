@@ -13,4 +13,8 @@ Material::Material(std::string const& name, Color const& ka, Color const& kd, Co
   ks   {ks},
   kd   {kd},
   m    {m} {}
-  
+
+bool Material::operator==(Material const& rhs) {
+  return (name == rhs.name) && (ka == rhs.ka) && (kd == rhs.kd) &&
+         (ks == rhs.ks) && (m == rhs.m);
+}

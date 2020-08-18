@@ -13,6 +13,8 @@ struct Material {
   Color ks;         // Reflection factor for specular light
   float m;          // Exponent for describing the surface properties
 
+  bool operator==(Material const& rhs);
 };
+
 
 #endif // MATERIAL_HPP

@@ -24,6 +24,19 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(1 == mat_blue.m);
 
     REQUIRE(2 == s.shapes.size());
+    auto box = std::dynamic_pointer_cast<Box>(s.shapes[0]);
+    REQUIRE("rbottom" == box->name());
+    glm::vec3 min{-100, -80, -200};
+    REQUIRE(min == box->min());
+    glm::vec3 max{100, 80, -100};
+    REQUIRE(max == box->max());
+    REQUIRE(mat_red == *(box->material()));
+    auto sphere = std::dynamic_pointer_cast<Sphere>(s.shapes[1]);
+    REQUIRE("bsphere" == sphere->name());
+    glm::vec3 center{0, 0, -100};
+    REQUIRE(center == sphere->center());
+    REQUIRE(50 == Approx(sphere->radius()));
+    REQUIRE(mat_blue == *(sphere->material()));
 
     REQUIRE(1 == s.lights.size());
   }
