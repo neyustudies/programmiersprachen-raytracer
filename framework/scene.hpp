@@ -1,15 +1,17 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+#include <glm/vec3.hpp>
+#include <map>
+#include <string>
+#include <vector>
 #include "camera.hpp"
 #include "color.hpp"
 #include "light.hpp"
 #include "render.hpp"
 #include "shape.hpp"
-#include <glm/vec3.hpp>
-#include <map>
-#include <string>
-#include <vector>
+
+struct Render;  // XXX
 
 /**
  * A scene that can be rendered, consisting of shapes and point light sources.

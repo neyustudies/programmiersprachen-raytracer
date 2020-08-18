@@ -1,14 +1,26 @@
+#include <iostream>
 #include <renderer.hpp>
+#include <scene.hpp>
+#include <sdfparser.hpp>
 #include <window.hpp>
 
-#include <GLFW/glfw3.h>
-#include <thread>
-#include <utility>
-#include <cmath>
+int main(int argc, char *argv[]) {
 
-//now single threaded again
-int main(int argc, char* argv[])
-{
+  if (2 != argc) {
+    std::cerr << "RAYTRACER\n"
+              << "    Usage: ./raytracer <file.sdf>\n";
+  }
+
+  auto scene = read_from_sdf("../source/tests/simple.sdf");
+  for (auto const& r : scene.renders) {
+    std::cerr << "Rendering scene to '" << r.filename << "'...\n";
+    Renderer renderer{r.x_res, r.y_res, r.filename};
+    renderer.render(scene, r);
+  }
+
+  return 0;
+
+  /**
   unsigned const image_width = 800;
   unsigned const image_height = 600;
   std::string const filename = "./checkerboard.ppm";
@@ -27,4 +39,5 @@ int main(int argc, char* argv[])
   }
 
   return 0;
+  */
 }

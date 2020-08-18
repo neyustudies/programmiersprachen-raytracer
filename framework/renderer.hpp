@@ -10,22 +10,22 @@
 #ifndef BUW_RENDERER_HPP
 #define BUW_RENDERER_HPP
 
+#include <glm/glm.hpp>
+#include <string>
+#include "render.hpp"
+#include "scene.hpp"
 #include "color.hpp"
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
-#include <string>
-#include <glm/glm.hpp>
 
-class Renderer
-{
-public:
+class Renderer {
+ public:
   Renderer(unsigned w, unsigned h, std::string const& file);
 
-  void render();
+  void render(Scene const& scene, Render const& r);
   void write(Pixel const& p);
 
-  inline std::vector<Color> const& color_buffer() const
-  {
+  inline std::vector<Color> const& color_buffer() const {
     return color_buffer_;
   }
 

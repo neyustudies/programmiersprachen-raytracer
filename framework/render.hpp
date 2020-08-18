@@ -6,6 +6,7 @@
 
 /**
  * Set of instructions that can be used to render a scene in a specified way.
+ * TODO:  Perhaps rename to `RenderSettings` to avoid confusion w/ `Renderer`?
  */
 struct Render {
   // std::shared_ptr<Scene> scene;
