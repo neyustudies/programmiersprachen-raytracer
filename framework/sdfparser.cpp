@@ -87,14 +87,29 @@ Scene read_from_sdf(std::string const& filename) {
         float fov;
         in >> fov;
         Camera camera{object_name, fov};
-        scene.cameras.push_back(camera);
+        scene.cameras.emplace(object_name, camera);
       } else {
         warn_unknown("class", class_name, line);
       }
     } else if ("ambient" == identifier) {
       scene.ambient = parse_color(in);
     } else if ("render" == identifier) {
-      // TODO
+      std::string camera_name;
+      in >> camera_name;
+      auto camera_it = scene.cameras.find(camera_name);
+      if (scene.cameras.end() == camera_it) {
+        warn_unknown("camera", camera_name, line);
+        continue;
+      }
+      auto camera = std::make_shared<Camera>(camera_it->second);
+      std::string filename;
+      in >> filename;
+      std::size_t x_res;
+      in >> x_res;
+      std::size_t y_res;
+      in >> y_res;
+      Render render{camera, filename, x_res, y_res};
+      scene.renders.push_back(render);
     } else {
       warn_unknown("identifier", identifier, line);
     }

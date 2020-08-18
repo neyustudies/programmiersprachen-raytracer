@@ -1,8 +1,6 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
 #include "sdfparser.hpp"
-#include "sphere.hpp"
-#include "box.hpp"
 
 
 TEST_CASE("sdf_parser", "[sdf]") {
@@ -50,7 +48,7 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(100.f == Approx(light.brightness));
 
     REQUIRE(1 == s.cameras.size());
-    auto camera = s.cameras[0];
+    auto camera = s.cameras.find("eye")->second;
     REQUIRE("eye" == camera.name());
     glm::vec3 camera_pos{0, 0, 0};
     REQUIRE(camera_pos == camera.eye());
@@ -62,5 +60,12 @@ TEST_CASE("sdf_parser", "[sdf]") {
 
     Color ambient{0.1f, 0.f, 0.1f};
     REQUIRE(ambient == s.ambient);
+
+    REQUIRE(1 == s.renders.size());
+    auto render = s.renders[0];
+    REQUIRE("eye" == render.camera->name());
+    REQUIRE("image.ppm" == render.filename);
+    REQUIRE(480 == render.x_res);
+    REQUIRE(320 == render.y_res);
   }
 }
