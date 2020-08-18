@@ -104,9 +104,9 @@ Scene read_from_sdf(std::string const& filename) {
       auto camera = std::make_shared<Camera>(camera_it->second);
       std::string filename;
       in >> filename;
-      std::size_t x_res;
+      unsigned x_res;
       in >> x_res;
-      std::size_t y_res;
+      unsigned y_res;
       in >> y_res;
       Render render{camera, filename, x_res, y_res};
       scene.renders.push_back(render);
