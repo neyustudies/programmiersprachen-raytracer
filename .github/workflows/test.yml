@@ -40,4 +40,6 @@ jobs:
         make
 
     - name: tests
-      run: build/source/tests
+      run: |
+        cd build
+        source/tests
