@@ -1,7 +1,8 @@
 #include "sdfparser.hpp"
+#include "box.hpp"
+#include "camera.hpp"
 #include "color.hpp"
 #include "sphere.hpp"
-#include "box.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -83,10 +84,15 @@ Scene read_from_sdf(std::string const& filename) {
         Light light{object_name, pos, color, brightness};
         scene.lights.push_back(light);
       } else if ("camera" == class_name) {
-        // TODO
+        float fov;
+        in >> fov;
+        Camera camera{object_name, fov};
+        scene.cameras.push_back(camera);
       } else {
         warn_unknown("class", class_name, line);
       }
+    } else if ("ambient" == identifier) {
+      // TODO
     } else if ("render" == identifier) {
       // TODO
     } else {

@@ -46,5 +46,16 @@ TEST_CASE("sdf_parser", "[sdf]") {
     Color color{.2, .2, .2};
     REQUIRE(color == light.color);
     REQUIRE(100.f == Approx(light.brightness));
+
+    REQUIRE(1 == s.cameras.size());
+    auto camera = s.cameras[0];
+    REQUIRE("eye" == camera.name());
+    glm::vec3 camera_pos{0, 0, 0};
+    REQUIRE(camera_pos == camera.eye());
+    glm::vec3 camera_direction{0, 0, -1};
+    REQUIRE(camera_direction == camera.dir());
+    glm::vec3 camera_up{0, 1, 0};
+    REQUIRE(camera_up == camera.up());
+    REQUIRE(45.f == Approx(camera.fov_x()));
   }
 }
