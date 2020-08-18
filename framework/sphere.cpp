@@ -16,10 +16,6 @@ Sphere::Sphere(glm::vec3 const& ctr, float r, std::string const& name) :
   center_ {ctr},
   radius_ {r} {}
 
-Sphere::Sphere(glm::vec3 const& ctr, float r, std::string const& name, Color const& clr) :
-  Shape   {name, clr},
-  center_ {ctr},
-  radius_ {r} {}
 
 Sphere::Sphere(glm::vec3 const& ctr, float r, std::string const& name, std::shared_ptr<Material> const& material) :
   Shape   {name, material},

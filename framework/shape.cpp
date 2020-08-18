@@ -7,10 +7,6 @@ Shape::Shape() :
 Shape::Shape(std::string const& name) :
   name_ {name} {}
 
-Shape::Shape(std::string const& name, Color const& clr) :
-  name_ {name},
-  color_{clr} {}
-
 Shape::Shape(std::string const& name, std::shared_ptr<Material> const& material) :
   name_ {name},
   material_ {material} {}
@@ -19,10 +15,6 @@ Shape::~Shape() {}
 
 std::string Shape::name() const {
   return name_;
-}
-
-Color Shape::color() const {
-  return color_;
 }
 
 std::shared_ptr<Material> const& Shape::material() const {
