@@ -13,9 +13,9 @@ TEST_CASE("default constructor sphere", "[default constructor]") {
   REQUIRE(s1.center().x == 0.0f);
   REQUIRE(s1.center().y == 0.0f);
   REQUIRE(s1.center().z == 0.0f);
-  REQUIRE(s1.radius() == 0.0f);
-  REQUIRE(s1.area() == 0.0f);
-  REQUIRE(s1.volume() == 0.0f);
+  REQUIRE(s1.radius() == 1.0f);
+  REQUIRE(s1.area() == Approx(12.5664f));
+  REQUIRE(s1.volume() == Approx(4.1888f));
   REQUIRE(s1.name() == "Unnamed Sphere");
 }
 
@@ -78,10 +78,10 @@ TEST_CASE("print a shape", "[print]") {
   Box default_box{};
   Sphere Sun{{30.f,30.f,30.f}, 10.f, "Sun"};
   Box Moon{{1.f,5.f,2.f}, {4.3f, 6.f, 3.3f}, "Moon"};
-  default_sphere.print(std::cout);
+  /* default_sphere.print(std::cout);
   default_box.print(std::cout);
   Sun.print(std::cout);
-  Moon.print(std::cout);
+  Moon.print(std::cout); */
 }
 
 TEST_CASE("intersect_ray_sphere", "[intersect]") {
@@ -161,8 +161,8 @@ TEST_CASE("example code, destructor", "[task 5.8]") {
   glm::vec3 position{0.0f, 0.0f, 0.0f};
   Sphere* s1 = new Sphere{position, 1.2f,  "sphere0"}; 
   Shape* s2 = new Sphere{position, 1.2f, "sphere1"};
-  s1->print(std::cout); 
-  s2->print(std::cout);
+  //s1->print(std::cout); 
+  //s2->print(std::cout);
   delete s1; 
   delete s2;
 }
