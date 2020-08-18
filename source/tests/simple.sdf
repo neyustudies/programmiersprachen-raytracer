@@ -8,6 +8,7 @@ define shape sphere bsphere 0 0 -100 50 blue
 
 # light
 define light sun 1000 700 0 .2 .2 .2 100
+ambient .1 0 .1
 
 # camera
 define camera eye 45.0

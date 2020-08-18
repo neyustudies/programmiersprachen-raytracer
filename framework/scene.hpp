@@ -2,6 +2,7 @@
 #define SCENE_HPP
 
 #include "camera.hpp"
+#include "color.hpp"
 #include "light.hpp"
 #include "shape.hpp"
 #include <glm/vec3.hpp>
@@ -17,6 +18,7 @@ struct Scene {
   std::vector<std::shared_ptr<Shape>> shapes;
   std::vector<Light> lights;
   std::vector<Camera> cameras;
+  Color ambient;
 };
 
 #endif  // SCENE_HPP

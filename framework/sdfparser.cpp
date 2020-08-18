@@ -92,7 +92,7 @@ Scene read_from_sdf(std::string const& filename) {
         warn_unknown("class", class_name, line);
       }
     } else if ("ambient" == identifier) {
-      // TODO
+      scene.ambient = parse_color(in);
     } else if ("render" == identifier) {
       // TODO
     } else {
@@ -100,6 +100,7 @@ Scene read_from_sdf(std::string const& filename) {
     }
   }
 
+  in_file.close();
   std::cerr << "[Info][SDF] Parsed " << line << " lines.\n";
   return scene;
 }

@@ -57,5 +57,8 @@ TEST_CASE("sdf_parser", "[sdf]") {
     glm::vec3 camera_up{0, 1, 0};
     REQUIRE(camera_up == camera.up());
     REQUIRE(45.f == Approx(camera.fov_x()));
+
+    Color ambient{0.1f, 0.f, 0.1f};
+    REQUIRE(ambient == s.ambient);
   }
 }
