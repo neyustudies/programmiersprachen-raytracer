@@ -32,7 +32,7 @@ TEST_CASE("default constructor box", "[default constructor]") {
 
 TEST_CASE("construct a sphere object", "[constructor]" ) {
   Sphere s2{{50, 40, 30}, 5};
-  Sphere s3{{1, 2, 3}, 4, "Sphery", {0.3f,1.0f,0.2f}};
+  Sphere s3{{1, 2, 3}, 4, "Sphery"};
   REQUIRE(s2.center().x == 50.0f);
   REQUIRE(s2.center().y == 40.0f);
   REQUIRE(s2.center().z == 30.0f);
@@ -54,7 +54,7 @@ TEST_CASE("construct a box object", "[constructor]" ) {
   glm::vec3 neg{-8, 100.f, -300.3};
   Box b2{small,small};
   Box b3{small,big};
-  Box b4{neg, small, "Boxxy", {0.3f,1.0f,0.2f}};
+  Box b4{neg, small, "Boxxy"};
   REQUIRE(b2.max() == small);
   REQUIRE(b2.min() == small);
   REQUIRE(b2.max().x == 1.0f);
@@ -76,8 +76,8 @@ TEST_CASE("construct a box object", "[constructor]" ) {
 TEST_CASE("print a shape", "[print]") {
   Sphere default_sphere{};
   Box default_box{};
-  Sphere Sun{{30.f,30.f,30.f}, 10.f, "Sun", {0.2f,1.f,0.f}};
-  Box Moon{{1.f,5.f,2.f}, {4.3f, 6.f, 3.3f}, "Moon", {0.1f, 0.5f, 0.8f}};
+  Sphere Sun{{30.f,30.f,30.f}, 10.f, "Sun"};
+  Box Moon{{1.f,5.f,2.f}, {4.3f, 6.f, 3.3f}, "Moon"};
   default_sphere.print(std::cout);
   default_box.print(std::cout);
   Sun.print(std::cout);
@@ -106,15 +106,12 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
 
 TEST_CASE("intersect sphere", "[intersect]") {
   SECTION("sphere with center, radius, name, color") {
-    Sphere sphere{{1,2,4},2,"Kugel",{1,0.1f,0.2f}};
+    Sphere sphere{{1,2,4},2,"Kugel"};
     Ray ray{{1,0,2},{0,0,2}};
     HitPoint result = sphere.intersect(ray,4);
     REQUIRE(result.isIntersected);
     REQUIRE(result.t == 2.0f);
     REQUIRE(result.name == "Kugel");
-    REQUIRE(result.clr.r == 1.0f);
-    REQUIRE(result.clr.g == 0.1f);
-    REQUIRE(result.clr.b == 0.2f);
     REQUIRE(result.point.x == 1.0f);
     REQUIRE(result.point.y == 0.0f);
     REQUIRE(result.point.z == 6.0f);
@@ -137,7 +134,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
     REQUIRE(hit.direction.z == 2.0f);
   }
   SECTION("sphere that is not hit") {
-    Sphere sphere{{1,2,4},2,"Kugel",{1,0.1f,0.2f}};
+    Sphere sphere{{1,2,4},2,"Kugel"};
     Ray ray{{1,8,2},{0,0,2}};
     HitPoint nohit = sphere.intersect(ray,2);
     REQUIRE_FALSE(nohit.isIntersected);
@@ -153,19 +150,17 @@ TEST_CASE("intersect sphere", "[intersect]") {
 }
 
 TEST_CASE("example code, dynamic vs static", "[task 5.7]") {
-  Color red{255, 0, 0};
   glm::vec3 position{0.0f, 0.0f, 0.0f};
-  std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>(position, 1.2f, "sphere0", red);
-  std::shared_ptr<Shape> s2 = std::make_shared<Sphere>(position, 1.2f, "sphere1", red);
+  std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>(position, 1.2f, "sphere0");
+  std::shared_ptr<Shape> s2 = std::make_shared<Sphere>(position, 1.2f, "sphere1");
   //s1->print(std::cout); 
   //s2->print(std::cout);
 }
 
 TEST_CASE("example code, destructor", "[task 5.8]") {
-  Color red{255, 0, 0};
   glm::vec3 position{0.0f, 0.0f, 0.0f};
-  Sphere* s1 = new Sphere{position, 1.2f,  "sphere0", red}; 
-  Shape* s2 = new Sphere{position, 1.2f, "sphere1", red};
+  Sphere* s1 = new Sphere{position, 1.2f,  "sphere0"}; 
+  Shape* s2 = new Sphere{position, 1.2f, "sphere1"};
   s1->print(std::cout); 
   s2->print(std::cout);
   delete s1; 

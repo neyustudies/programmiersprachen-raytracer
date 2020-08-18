@@ -4,7 +4,7 @@
 Sphere::Sphere() :
   Shape   {"Unnamed Sphere"},
   center_ {glm::vec3{}},
-  radius_ {0.0f} {}
+  radius_ {1.0f} {}
 
 Sphere::Sphere(glm::vec3 const& ctr, float r) :
   Shape   {"Unnamed Sphere"},

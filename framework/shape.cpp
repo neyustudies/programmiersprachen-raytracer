@@ -1,8 +1,8 @@
 #include "shape.hpp"
 
 Shape::Shape() :
-  name_ {"default"},
-  material_ {} {}
+  name_ {"Unnamed Shape"},
+  material_ {nullptr} {}
 
 Shape::Shape(std::string const& name) :
   name_ {name} {}
