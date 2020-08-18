@@ -12,7 +12,7 @@ glm::vec3 parse_vec3(std::istringstream &in);
 
 void warn_unknown(std::string what, std::string name, int line) {
   std::cerr << "[Warning][SDF] In line " << line << ", ignoring unknown "
-            << what << " '" << name << "'\n";
+            << what << " '" << name << "'.\n";
 }
 
 Scene read_from_sdf(std::string const& filename) {
@@ -94,6 +94,7 @@ Scene read_from_sdf(std::string const& filename) {
     }
   }
 
+  std::cerr << "[Info][SDF] Parsed " << line << " lines.\n";
   return scene;
 }
 
