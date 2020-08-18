@@ -11,8 +11,8 @@ struct Render {
   // std::shared_ptr<Scene> scene;
   std::shared_ptr<Camera> camera;
   std::string filename;
-  std::size_t x_res;
-  std::size_t y_res;
+  unsigned x_res;
+  unsigned y_res;
 };
 
 #endif  // RENDER_HPP
