@@ -57,7 +57,7 @@ Scene read_from_sdf(std::string const& filename) {
             continue;
           }
           auto material = std::make_shared<Material>(material_it->second);
-          Sphere s{center, radius, object_name, material};
+          Sphere s{center, radius, name, material};
           scene.shapes.push_back(std::make_shared<Sphere>(s));
         } else if ("box" == object_name) {
           auto p1 = parse_vec3(in);
@@ -70,7 +70,7 @@ Scene read_from_sdf(std::string const& filename) {
             continue;
           }
           auto material = std::make_shared<Material>(material_it->second);
-          Box b{p1, p2, object_name, material};
+          Box b{p1, p2, name, material};
           scene.shapes.push_back(std::make_shared<Box>(b));
         } else {
           warn_unknown("shape", object_name, line);
