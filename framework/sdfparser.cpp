@@ -3,6 +3,7 @@
 #include "camera.hpp"
 #include "color.hpp"
 #include "sphere.hpp"
+#include "render.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>

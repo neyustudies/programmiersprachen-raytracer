@@ -11,8 +11,6 @@
 #include "render.hpp"
 #include "shape.hpp"
 
-struct Render;  // XXX
-
 /**
  * A scene that can be rendered, consisting of shapes and point light sources.
  */
