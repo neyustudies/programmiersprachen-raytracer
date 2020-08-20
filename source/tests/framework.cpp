@@ -109,7 +109,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
     Sphere sphere{{1,2,4},2,"Kugel"};
     Ray ray{{1,0,2},{0,0,2}};
     HitPoint result = sphere.intersect(ray,4);
-    REQUIRE(result.isIntersected);
+    REQUIRE(result.did_intersect);
     REQUIRE(result.t == 2.0f);
     REQUIRE(result.name == "Kugel");
     REQUIRE(result.point.x == 1.0f);
@@ -123,7 +123,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
     Sphere noname{{1,2,4},2};
     Ray ray{{1,0,2},{0,0,2}};
     HitPoint hit = noname.intersect(ray,4);
-    REQUIRE(hit.isIntersected);
+    REQUIRE(hit.did_intersect);
     REQUIRE(hit.t == 2.0f);
     REQUIRE(hit.name == "Unnamed Sphere");
     REQUIRE(hit.point.x == 1.0f);
@@ -137,7 +137,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
     Sphere sphere{{1,2,4},2,"Kugel"};
     Ray ray{{1,8,2},{0,0,2}};
     HitPoint nohit = sphere.intersect(ray,2);
-    REQUIRE_FALSE(nohit.isIntersected);
+    REQUIRE_FALSE(nohit.did_intersect);
     REQUIRE(nohit.t == 2.0f);
     REQUIRE(nohit.name == "Kugel");
     REQUIRE(nohit.point.x == 1.0f);
