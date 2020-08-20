@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
               << "    Usage: ./raytracer <file.sdf>\n";
   }
 
-  auto scene = read_from_sdf("../source/tests/simple.sdf");
+  auto scene = read_from_sdf(argv[1]);
   for (auto const& r : scene.renders) {
     std::cerr << "Rendering scene to '" << r.filename << "'...\n";
     Renderer renderer{r.x_res, r.y_res, r.filename};
