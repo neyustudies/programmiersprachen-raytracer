@@ -1,6 +1,8 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
 #include "sdfparser.hpp"
+#include "box.hpp"
+#include "sphere.hpp"
 
 
 TEST_CASE("sdf_parser", "[sdf]") {

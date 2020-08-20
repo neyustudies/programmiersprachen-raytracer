@@ -4,6 +4,7 @@
 #include "material.hpp"
 #include "hitpoint.hpp"
 #include <glm/gtx/intersect.hpp>
+#include "ray.hpp"
 #include <string>
 #include <memory>
 
