@@ -21,7 +21,16 @@ void Renderer::render(Scene const& scene, Render const& r) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p{x, y};
       p.color = scene.ambient;
+
       // TODO: trace rays
+      Ray ray = r.camera->ray(x, y, r.x_res, r.y_res);
+      for (auto shape : scene.shapes) {
+        auto hitpoint = shape->intersect(ray, 1.f);
+        if (hitpoint.did_intersect) {
+          p.color = hitpoint.clr;
+        }
+      }
+
       write(p);
     }
   }
@@ -30,7 +39,7 @@ void Renderer::render(Scene const& scene, Render const& r) {
 
 void Renderer::write(Pixel const& p) {
   // flip pixels, because of opengl glDrawPixels
-  size_t buf_pos = (width_*p.y + p.x);
+  size_t buf_pos = (width_ * p.y + p.x);
   if (buf_pos >= color_buffer_.size() || (int)buf_pos < 0) {
     std::cerr << "Fatal Error Renderer::write(Pixel p) : "
               << "pixel out of ppm_ : " << (int)p.x << "," << (int)p.y

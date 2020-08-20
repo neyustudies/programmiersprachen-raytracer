@@ -2,6 +2,8 @@
 #define SHAPE_HPP
 #include "color.hpp"
 #include "material.hpp"
+#include "ray.hpp"
+#include "hitpoint.hpp"
 #include <string>
 #include <memory>
 

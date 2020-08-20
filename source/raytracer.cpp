@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
   if (2 != argc) {
     std::cerr << "RAYTRACER\n"
               << "    Usage: ./raytracer <file.sdf>\n";
+    return 1;
   }
 
   auto scene = read_from_sdf(argv[1]);
