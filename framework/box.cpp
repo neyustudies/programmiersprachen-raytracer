@@ -1,6 +1,8 @@
 #include "box.hpp"
+#include "hitpoint.hpp"
 #include <cmath>
 #include <vector>
+#include <algorithm>
 
 Box::Box() :
   Shape {"Unnamed Box"},
@@ -83,13 +85,18 @@ bool Box::did_intersect(Ray const& ray, float t) const {
 
 HitPoint Box::intersect(Ray const& ray, float t) const {
   glm::vec3 hitpoint;
-  bool isHit = did_intersect(ray, t);
   glm::vec3 vec = hitpoint - ray.origin;
-  float d = std::sqrt(std::pow(vec.x, 2) + 
-                      std::pow(vec.y, 2) + 
+  float d = std::sqrt(std::pow(vec.x, 2) +
+                      std::pow(vec.y, 2) +
                       std::pow(vec.z, 2));
-  return HitPoint{};
-  /* TODO */
+  return HitPoint{
+      did_intersect(ray, t),
+      d,
+      name_,
+      material_->ka,
+      hitpoint,
+      ray.direction
+  };
 }
 
 
