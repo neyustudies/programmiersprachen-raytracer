@@ -53,7 +53,7 @@ HitPoint Sphere::intersect(Ray const& ray, float distance) const {
       did_intersect,
       distance,
       name_,
-      color_,
+      material_->ka,
       ray.origin + (distance * ray_direction),  // intersection_point
       ray_direction};
 }
