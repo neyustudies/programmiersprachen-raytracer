@@ -1,5 +1,6 @@
 #include "box.hpp"
 #include <cmath>
+#include <vector>
 
 Box::Box() :
   Shape {"Unnamed Box"},
@@ -42,6 +43,54 @@ float Box::volume() const {
          std::abs(max_.y - min_.y) *
          std::abs(max_.z - min_.z);
 }
+
+bool Box::did_intersect(Ray const& ray, float& t) const {
+  bool result = false;
+  glm::vec3 hitpoint;
+  if(ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {
+    throw "direction should not be zero";
+  } else {
+    std::vector<float> distance;
+
+    float minX = (min_.x - ray.origin.x) / ray.direction.x;
+    float maxX = (max_.x - ray.origin.x) / ray.direction.x;
+    float minY = (min_.y - ray.origin.y) / ray.direction.y;
+    float maxY = (max_.y - ray.origin.y) / ray.direction.y;
+    float minZ = (min_.z - ray.origin.z) / ray.direction.z;
+    float maxZ = (max_.z - ray.origin.z) / ray.direction.z;
+
+    distance.push_back(minX);
+    distance.push_back(maxX);
+    distance.push_back(minY);
+    distance.push_back(maxY);
+    distance.push_back(minZ);
+    distance.push_back(maxZ);
+
+    std::sort(distance.begin(), distance.end());
+    for(auto i : distance) {
+      if(!std::isinf(i)) {
+        hitpoint = ray.origin + (i * ray.direction);
+        if((hitpoint.x <=max_.x && hitpoint.x >= min_.x) &&
+           (hitpoint.y <=max_.y && hitpoint.y >= min_.y) &&
+           (hitpoint.z <=max_.z && hitpoint.z >= min_.z)) {
+             t = i;
+             result = true;
+           }
+      }
+    }
+  } return result;
+}
+
+HitPoint Box::intersect(Ray const& ray, float& t) const {
+  glm::vec3 hitpoint;
+  bool isHit = did_intersect(ray, t);
+  glm::vec3 vec = hitpoint - ray.origin;
+  float d = std::sqrt(std::pow(vec.x, 2) + 
+                      std::pow(vec.y, 2) + 
+                      std::pow(vec.z, 2));
+  /* TODO */
+}
+
 
 std::ostream& Box::print(std::ostream& os) const {
   Shape::print(os);
