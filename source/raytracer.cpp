@@ -9,9 +9,10 @@ int main(int argc, char *argv[]) {
   if (2 != argc) {
     std::cerr << "RAYTRACER\n"
               << "    Usage: ./raytracer <file.sdf>\n";
+    return 1;
   }
 
-  auto scene = read_from_sdf("../source/tests/simple.sdf");
+  auto scene = read_from_sdf(argv[1]);
   for (auto const& r : scene.renders) {
     std::cerr << "Rendering scene to '" << r.filename << "'...\n";
     Renderer renderer{r.x_res, r.y_res, r.filename};

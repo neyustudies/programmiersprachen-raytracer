@@ -6,7 +6,7 @@
 
 struct HitPoint {
 
-  bool isIntersected  = false;
+  bool did_intersect = false;
   float t             = 0.0f;
   std::string name    = "";
   Color clr           = {0.0f, 0.0f, 0.0f};

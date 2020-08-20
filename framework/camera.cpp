@@ -1,4 +1,6 @@
 #include "camera.hpp"
+#include <cmath>
+#include <glm/glm.hpp>
 
 Camera::Camera() :
   name_  {"Camera"},
@@ -20,6 +22,16 @@ Camera::Camera(std::string const& name, float fov_x, glm::vec3 const& eye, glm::
   eye_   {eye},
   dir_   {dir},
   up_    {up} {}
+
+Ray Camera::ray(unsigned x, unsigned y, unsigned res_x, unsigned res_y) {
+  Ray r{eye_};
+  float d = ((float)res_x / 2) / (tan(180.f / M_PI * fov_x_ / 2));
+  glm::vec3 s{(float)x - ((float)res_x / 2), (float)y - ((float)res_y / 2), -d};
+  r.direction = dir_ + s;
+
+  // TODO take rotation (up_) into account
+  return r;
+}
 
 std::string Camera::name() const {
   return name_;
