@@ -15,8 +15,8 @@ class Box : public Shape {
     glm::vec3 max() const;
     float area() const override;
     float volume() const override;
-    bool did_intersect(Ray const& ray, float& t) const;
-    HitPoint intersect(Ray const& ray, float& t) const override;
+    bool did_intersect(Ray const& ray, float t) const;
+    HitPoint intersect(Ray const& ray, float t) const override;
     std::ostream& print(std::ostream& os) const override;
 
   private:
