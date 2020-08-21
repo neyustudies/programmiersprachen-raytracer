@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_RUNNER
-//#include <glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <catch.hpp>
 #include "shape.hpp"
@@ -241,4 +241,35 @@ TEST_CASE("material constructor", "[material]") {
     REQUIRE(s2.material()->m    == 10.0f);
     REQUIRE(s2.material()->name.compare("Test") == 0);
   }
-} 
+}
+
+TEST_CASE("intersect Box", "[intersect]") {
+  auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
+                                               Color{0.1f, 0.4f, 0.9f}, 
+                                               Color{0.0f, 0.5f, 0.6f}, 10.0f);
+  Box b1{{-1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, 1.0f}, "Box", m1};
+  float t = 0.0f;
+
+  /* testing ray inside */
+  /* REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}}, t) == true);
+  REQUIRE(t == Approx(sqrt(3.0f))); */
+
+  /* testing sides */
+  /* REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {-1.0f, 0.0f, 0.0f}}, t) == true);
+  REQUIRE(b1.did_intersect(Ray{{-2.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t) == true);
+  REQUIRE(t == 1.0f);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, -1.0f, 0.0f}}, t) == true);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, -2.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t) == true);
+  REQUIRE(t == 1.0f);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 0.0f, -1.0f}}, t) == true);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, 1.0f}}, t) == true);
+  REQUIRE(t == 1.0f); */
+
+  /* testing parallel ray, intersection should be false */
+  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t) == false);
+  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 1.0f, 0.0f}}, t) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {1.0f, 0.0f, 0.0f}}, t) == false);
+}
