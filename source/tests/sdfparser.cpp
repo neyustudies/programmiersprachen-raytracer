@@ -56,7 +56,7 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(camera_pos == camera.eye());
     glm::vec3 camera_direction{0, 0, -1};
     REQUIRE(camera_direction == camera.dir());
-    glm::vec3 camera_up{0, 1, 0};
+    glm::vec3 camera_up{0, 5, 0};
     REQUIRE(camera_up == camera.up());
     REQUIRE(45.f == Approx(camera.fov_x()));
 
