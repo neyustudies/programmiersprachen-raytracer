@@ -87,7 +87,10 @@ Scene read_from_sdf(std::string const& filename) {
       } else if ("camera" == class_name) {
         float fov;
         in >> fov;
-        Camera camera{object_name, fov};
+        auto eye = parse_vec3(in);
+        auto dir = parse_vec3(in);
+        auto up  = parse_vec3(in);
+        Camera camera{object_name, fov, eye, dir, up};
         scene.cameras.emplace(object_name, camera);
       } else {
         warn_unknown("class", class_name, line);
