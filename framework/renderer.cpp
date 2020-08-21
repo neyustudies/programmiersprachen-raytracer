@@ -25,7 +25,7 @@ void Renderer::render(Scene const& scene, Render const& r) {
       // TODO: trace rays
       Ray ray = r.camera->ray(x, y, r.x_res, r.y_res);
       for (auto shape : scene.shapes) {
-        auto hitpoint = shape->intersect(ray, 1.f);
+        auto hitpoint = shape->intersect(ray);
         if (hitpoint.did_intersect) {
           p.color = hitpoint.clr;
         }

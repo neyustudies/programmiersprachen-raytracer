@@ -108,7 +108,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
   SECTION("sphere with center, radius, name, color") {
     Sphere sphere{{1,2,4},2,"Kugel"};
     Ray ray{{1,0,2},{0,0,2}};
-    HitPoint result = sphere.intersect(ray,4);
+    HitPoint result = sphere.intersect(ray);
     REQUIRE(result.did_intersect);
     REQUIRE(result.t == 2.0f);
     REQUIRE(result.name == "Kugel");
@@ -122,7 +122,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
   SECTION("sphere without name and color") {
     Sphere noname{{1,2,4},2};
     Ray ray{{1,0,2},{0,0,2}};
-    HitPoint hit = noname.intersect(ray,4);
+    HitPoint hit = noname.intersect(ray);
     REQUIRE(hit.did_intersect);
     REQUIRE(hit.t == 2.0f);
     REQUIRE(hit.name == "Unnamed Sphere");
@@ -136,7 +136,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
   SECTION("sphere that is not hit") {
     Sphere sphere{{1,2,4},2,"Kugel"};
     Ray ray{{1,8,2},{0,0,2}};
-    HitPoint nohit = sphere.intersect(ray,2);
+    HitPoint nohit = sphere.intersect(ray);
     REQUIRE_FALSE(nohit.did_intersect);
     REQUIRE(nohit.t == 2.0f);
     REQUIRE(nohit.name == "Kugel");

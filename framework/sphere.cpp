@@ -40,10 +40,11 @@ float Sphere::volume() const {
   return 4.0f / 3.0f * M_PI * std::pow(radius_, 3.0f);
 }
 
-HitPoint Sphere::intersect(Ray const& ray, float distance) const {
+HitPoint Sphere::intersect(Ray const& ray) const {
   auto ray_direction = glm::normalize(ray.direction);
+  float distance = NAN;
   bool did_intersect = glm::intersectRaySphere(
-      ray.origin,              // rayStarting
+      ray.origin,            // rayStarting
       ray_direction,         // rayNormalizedDirection
       center_,               // sphereCenter
       std::pow(radius_, 2),  // sphereRadiusSquered
