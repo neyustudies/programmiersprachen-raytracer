@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_RUNNER
-#include <glm/glm.hpp>
+//#include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <catch.hpp>
 #include "shape.hpp"
@@ -105,8 +105,11 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
 }
 
 TEST_CASE("intersect sphere", "[intersect]") {
+  auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
+                                               Color{0.1f, 0.4f, 0.9f}, 
+                                               Color{0.0f, 0.5f, 0.6f}, 10.0f);
   SECTION("sphere with center, radius, name, color") {
-    Sphere sphere{{1,2,4},2,"Kugel"};
+    Sphere sphere{{1,2,4},2,"Kugel", m1};
     Ray ray{{1,0,2},{0,0,2}};
     HitPoint result = sphere.intersect(ray);
     REQUIRE(result.did_intersect);
@@ -114,39 +117,41 @@ TEST_CASE("intersect sphere", "[intersect]") {
     REQUIRE(result.name == "Kugel");
     REQUIRE(result.point.x == 1.0f);
     REQUIRE(result.point.y == 0.0f);
-    REQUIRE(result.point.z == 6.0f);
+    REQUIRE(result.point.z == 4.0f);
     REQUIRE(result.direction.x == 0.0f);
     REQUIRE(result.direction.y == 0.0f);
-    REQUIRE(result.direction.z == 2.0f);
+    REQUIRE(result.direction.z == 1.0f);
   }
   SECTION("sphere without name and color") {
-    Sphere noname{{1,2,4},2};
+    Sphere noname{{1,2,4},2, "Sphere", m1};
     Ray ray{{1,0,2},{0,0,2}};
     HitPoint hit = noname.intersect(ray);
     REQUIRE(hit.did_intersect);
     REQUIRE(hit.t == 2.0f);
-    REQUIRE(hit.name == "Unnamed Sphere");
+    REQUIRE(hit.name == "Sphere");
     REQUIRE(hit.point.x == 1.0f);
     REQUIRE(hit.point.y == 0.0f);
-    REQUIRE(hit.point.z == 6.0f);
+    REQUIRE(hit.point.z == 4.0f);
     REQUIRE(hit.direction.x == 0.0f);
     REQUIRE(hit.direction.y == 0.0f);
-    REQUIRE(hit.direction.z == 2.0f);
+    REQUIRE(hit.direction.z == 1.0f);
   }
   SECTION("sphere that is not hit") {
-    Sphere sphere{{1,2,4},2,"Kugel"};
+    Sphere sphere{{1,2,4},2,"Kugel", m1};
     Ray ray{{1,8,2},{0,0,2}};
     HitPoint nohit = sphere.intersect(ray);
     REQUIRE_FALSE(nohit.did_intersect);
-    REQUIRE(nohit.t == 2.0f);
-    REQUIRE(nohit.name == "Kugel");
-    REQUIRE(nohit.point.x == 1.0f);
-    REQUIRE(nohit.point.y == 8.0f);
-    REQUIRE(nohit.point.z == 6.0f);
-    REQUIRE(nohit.direction.x == 0.0f);
-    REQUIRE(nohit.direction.y == 0.0f);
-    REQUIRE(nohit.direction.z == 2.0f);
   }
+}
+
+TEST_CASE("intersect sphere2", "[intersect]") {
+  auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
+                                               Color{0.1f, 0.4f, 0.9f}, 
+                                               Color{0.0f, 0.5f, 0.6f}, 10.0f);
+  Sphere s1{glm::vec3{1, 1, 1}, 2.0f, "h", m1};
+  Ray ray{{1, 1, 1}, {-1, -1, -1}};
+  HitPoint hit = s1.intersect(ray);
+  REQUIRE(hit.did_intersect);
 }
 
 TEST_CASE("example code, dynamic vs static", "[task 5.7]") {
