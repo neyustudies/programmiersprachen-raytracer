@@ -1,6 +1,5 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
-#include "color.hpp"
 #include "material.hpp"
 #include "hitpoint.hpp"
 #include <glm/gtx/intersect.hpp>
@@ -17,7 +16,6 @@ class Shape {
     virtual ~Shape();
     std::shared_ptr<Material> const& material() const;
     std::string name() const;
-    Color color() const;
     virtual HitPoint intersect(Ray const& ray) const = 0;
     virtual std::ostream& print(std::ostream& os) const;
     virtual float area() const = 0;
@@ -25,7 +23,6 @@ class Shape {
 
   protected:
     std::string name_;
-    Color color_;
     std::shared_ptr<Material> material_;
 
 };
