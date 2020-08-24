@@ -20,18 +20,9 @@ void Renderer::render(Scene const& scene, Render const& r) {
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p{x, y};
-      p.color = scene.ambient;
-
       // TODO: trace rays
       Ray ray = r.camera->ray(x, y, r.x_res, r.y_res);
-      for (auto shape : scene.shapes) {
-        auto hitpoint = shape->intersect(ray);
-        if (hitpoint.did_intersect) {
-          //p.color = hitpoint.clr;
-          p.color = color_buffer_.at(x * y);
-          p.color = trace(ray);
-        }
-      } 
+      p.color = trace(ray, scene);
 
       write(p);
     }
@@ -53,19 +44,29 @@ void Renderer::write(Pixel const& p) {
   ppm_.write(p);
 }
 
- Color Renderer::trace(Ray const& ray) {
-   float distance = 0.0f;
-   std::shared_ptr<Shape> closest_shape = nullptr;
-   for (std::shared_ptr<Shape> const& shape : shapes) {
-     HitPoint hp = shape->intersect(ray);   
-   }
-   if (closest_shape != nullptr) {
-     return shade(closest_shape, ray, distance);
-   }
-   return Color{0.1f, 0.1f, 0.3f};
- }
+Color Renderer::trace(Ray const& ray, Scene const& scene) {
+  HitPoint closest_hitpoint;
+  closest_hitpoint.t = INFINITY;
+  std::shared_ptr<Shape> closest_shape = nullptr;
 
- Color Renderer::shade(std::shared_ptr<Shape> shape, Ray const& ray, float distance) {
-   std::shared_ptr<Material> material = shape->material();
-   return material->ka + material->kd + material->ks; 
- } 
+  for (std::shared_ptr<Shape> const& shape : scene.shapes) {
+    HitPoint hitpoint = shape->intersect(ray);
+    if (hitpoint.did_intersect && closest_hitpoint.t > hitpoint.t) {
+      closest_hitpoint = hitpoint;
+      closest_shape = shape;
+    }
+  }
+
+  if (nullptr != closest_shape)
+    return shade(closest_shape, ray, closest_hitpoint.t);
+  else
+    return scene.ambient;
+}
+
+Color Renderer::shade(std::shared_ptr<Shape> shape,
+                      Ray const& ray,
+                      float distance) {
+  std::shared_ptr<Material> material = shape->material();
+  // TODO shading
+  return material->ka + material->kd + material->ks;
+}
