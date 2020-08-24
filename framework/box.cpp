@@ -46,7 +46,7 @@ float Box::volume() const {
          std::abs(max_.z - min_.z);
 }
 
-bool Box::did_intersect(Ray const& ray, float& t) const {
+bool Box::did_intersect(Ray const& ray, float& t, glm::vec3& normal) const {
   bool result = false;
   glm::vec3 hitpoint;
   if(ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {
@@ -77,27 +77,36 @@ bool Box::did_intersect(Ray const& ray, float& t) const {
            (hitpoint.z <=max_.z && hitpoint.z >= min_.z)) {
              t = i;
              result = true;
+             if (maxX == i) normal = {1, 0, 0};
+             if (minX == i) normal = {-1, 0, 0};
+             if (maxY == i) normal = {0, 1, 0};
+             if (minY == i) normal = {0, -1, 0};
+             if (maxZ == i) normal = {0, 0, 1};
+             if (minZ == i) normal = {0, 0, -1};
            }
       }
     }
-  } return result;
+  }
+  return result;
 }
 
 HitPoint Box::intersect(Ray const& ray) const {
   glm::vec3 hitpoint;
   glm::vec3 vec = hitpoint - ray.origin;
-  float d = std::sqrt(std::pow(vec.x, 2) +
+  float d = std::sqrt(std::pow(vec.x, 2) +  // TODO: unused?
                       std::pow(vec.y, 2) +
                       std::pow(vec.z, 2));
   float t = NAN;
-  bool intersect = did_intersect(ray, t);
+  glm::vec3 normal;
+  bool intersect = did_intersect(ray, t, normal);
   return HitPoint{
       intersect,
-      d, // TODO or t?
+      t, // TODO or t?
       name_,
       material_->ka,
       hitpoint,
-      ray.direction
+      ray.direction,
+      normal
   };
 }
 
