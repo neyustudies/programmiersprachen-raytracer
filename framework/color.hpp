@@ -51,6 +51,26 @@ struct Color
     return tmp;
   }
 
+  friend Color operator*(float f, Color const& a) {
+    auto tmp{a};
+    tmp.r = f * a.r;
+    tmp.g = f * a.g;
+    tmp.b = f * a.b;
+    return tmp;
+  }
+
+  friend Color operator*(Color const& a, float f) {
+    return f * a;
+  }
+
+  friend Color operator*(Color const& a, Color const& b) {
+    auto tmp{a};
+    tmp.r = a.r * b.r;
+    tmp.g = a.g * b.g;
+    tmp.b = a.b * b.b;
+    return tmp;
+  }
+
   friend bool operator==(Color const &a, Color const &b) {
     return (a.r == b.r) && (a.g == b.g) && (a.b == b.b);
   }

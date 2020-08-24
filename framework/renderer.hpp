@@ -22,7 +22,10 @@ class Renderer {
  public:
   Renderer(unsigned w, unsigned h, std::string const& file);
   Color trace(Ray const& ray, Scene const& scene);
-  Color shade(std::shared_ptr<Shape> shape, Ray const& ray, float distance);
+  Color shade(std::shared_ptr<Shape> shape,
+              Ray const& ray,
+              HitPoint const& hitpoint,
+              Scene const& scene);
 
   void render(Scene const& scene, Render const& r);
   void write(Pixel const& p);

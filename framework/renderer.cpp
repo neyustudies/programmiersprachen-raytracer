@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "renderer.hpp"
+#include <glm/ext.hpp>
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
     : width_(w),
@@ -58,15 +59,26 @@ Color Renderer::trace(Ray const& ray, Scene const& scene) {
   }
 
   if (nullptr != closest_shape)
-    return shade(closest_shape, ray, closest_hitpoint.t);
+    return shade(closest_shape, ray, closest_hitpoint, scene);
   else
     return scene.ambient;
 }
 
 Color Renderer::shade(std::shared_ptr<Shape> shape,
                       Ray const& ray,
-                      float distance) {
+                      HitPoint const& hitpoint,
+                      Scene const& scene) {
   std::shared_ptr<Material> material = shape->material();
-  // TODO shading
-  return material->ka + material->kd + material->ks;
+
+  // simple lighting model
+  auto light = scene.lights.front();
+  auto n_dot_i = glm::clamp(
+      std::abs(glm::dot(glm::normalize(ray.direction), hitpoint.normal)), 0.f,
+      1.f);
+  // auto intensity_d = light.brightness * light.color * dot;
+
+  return scene.ambient * material->ka +
+         light.brightness * light.color * material->kd * n_dot_i;
+  // return scene.ambient * material->ka + intensity_d * material->kd;
+  // intensity_s * material->ks;
 }

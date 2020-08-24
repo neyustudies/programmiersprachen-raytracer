@@ -50,13 +50,16 @@ HitPoint Sphere::intersect(Ray const& ray) const {
       std::pow(radius_, 2),  // sphereRadiusSquered
       distance               // intersectionDistance
       );
+  auto intersection_point = ray.origin + (distance * ray_direction);
   return HitPoint{
       did_intersect,
       distance,
       name_,
       material_->ka,
-      ray.origin + (distance * ray_direction),  // intersection_point
-      ray_direction};
+      intersection_point,
+      ray_direction,
+      glm::normalize(intersection_point - center_)
+  };
 }
 
 std::ostream& Sphere::print(std::ostream& os) const {
