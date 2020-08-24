@@ -50,3 +50,20 @@ void Renderer::write(Pixel const& p) {
 
   ppm_.write(p);
 }
+
+ Color Renderer::trace(Ray const& ray) {
+   float distance = 0.0f;
+   std::shared_ptr<Shape> closest_shape = nullptr;
+   for (std::shared_ptr<Shape> const& shape : shapes) {
+     HitPoint hp = shape->intersect(ray);   
+   }
+   if (closest_shape != nullptr) {
+     return shade(closest_shape, ray, distance);
+   }
+   return Color{0.1f, 0.1f, 0.3f};
+ }
+
+ Color Renderer::shade(std::shared_ptr<Shape> shape, Ray const& ray, float distance) {
+   std::shared_ptr<Material> material = shape->material();
+   return material->ka + material->kd + material->ks; 
+ } 

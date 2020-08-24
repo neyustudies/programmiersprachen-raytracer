@@ -21,6 +21,8 @@
 class Renderer {
  public:
   Renderer(unsigned w, unsigned h, std::string const& file);
+  Color trace(Ray const& ray);
+  Color shade(std::shared_ptr<Shape> shape, Ray const& ray, float distance);
 
   void render(Scene const& scene, Render const& r);
   void write(Pixel const& p);
@@ -35,6 +37,7 @@ private:
   std::vector<Color> color_buffer_;
   std::string filename_;
   PpmWriter ppm_;
+  std::vector<std::shared_ptr<Shape>> shapes;
 };
 
 #endif // #ifndef BUW_RENDERER_HPP
