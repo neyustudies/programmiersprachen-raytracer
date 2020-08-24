@@ -27,9 +27,11 @@ void Renderer::render(Scene const& scene, Render const& r) {
       for (auto shape : scene.shapes) {
         auto hitpoint = shape->intersect(ray);
         if (hitpoint.did_intersect) {
-          p.color = hitpoint.clr;
+          //p.color = hitpoint.clr;
+          p.color = color_buffer_.at(x * y);
+          p.color = trace(ray);
         }
-      }
+      } 
 
       write(p);
     }
