@@ -71,14 +71,25 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
   std::shared_ptr<Material> material = shape->material();
 
   // simple lighting model
-  auto light = scene.lights.front();
-  auto n_dot_i = glm::clamp(
-      std::abs(glm::dot(glm::normalize(ray.direction), hitpoint.normal)), 0.f,
-      1.f);
-  // auto intensity_d = light.brightness * light.color * dot;
+  Color kd_total;
+  for (auto const& light : scene.lights) {
+    auto n_dot_i = glm::clamp(
+        std::abs(glm::dot(glm::normalize(ray.direction), hitpoint.normal)), 0.f,
+        1.f);
+    auto hitpoint_to_light =
+        Ray{hitpoint.point, glm::normalize(light.pos - hitpoint.point)};
+    bool shadow = false;
+    for (auto const& s : scene.shapes) {
+      if (shape == s)
+        continue;
+      if (s->intersect(hitpoint_to_light).did_intersect)
+        shadow = true;
+    }
+    if (!shadow)
+      kd_total += light.brightness * light.color * material->kd * n_dot_i;
+  }
 
-  return scene.ambient * material->ka +
-         light.brightness * light.color * material->kd * n_dot_i;
+  return scene.ambient * material->ka + kd_total;
   // return scene.ambient * material->ka + intensity_d * material->kd;
   // intensity_s * material->ks;
 }
