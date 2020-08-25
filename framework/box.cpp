@@ -72,9 +72,9 @@ bool Box::did_intersect(Ray const& ray, float& t, glm::vec3& normal) const {
     for(auto i : distance) {
       if(!std::isinf(i)) {
         hitpoint = ray.origin + (i * ray.direction);
-        if((hitpoint.x <=max_.x && hitpoint.x >= min_.x) &&
-           (hitpoint.y <=max_.y && hitpoint.y >= min_.y) &&
-           (hitpoint.z <=max_.z && hitpoint.z >= min_.z)) {
+        if((hitpoint.x <= max_.x && hitpoint.x >= min_.x) &&
+           (hitpoint.y <= max_.y && hitpoint.y >= min_.y) &&
+           (hitpoint.z <= max_.z && hitpoint.z >= min_.z)) {
              t = i;
              result = true;
              if (maxX == i) normal = {1, 0, 0};
@@ -83,6 +83,7 @@ bool Box::did_intersect(Ray const& ray, float& t, glm::vec3& normal) const {
              if (minY == i) normal = {0, -1, 0};
              if (maxZ == i) normal = {0, 0, 1};
              if (minZ == i) normal = {0, 0, -1};
+             return result;
            }
       }
     }
@@ -101,7 +102,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   bool intersect = did_intersect(ray, t, normal);
   return HitPoint{
       intersect,
-      t, // TODO or t?
+      t,
       name_,
       material_->ka,
       hitpoint,
