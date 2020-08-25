@@ -29,6 +29,7 @@ class Renderer {
 
   void render(Scene const& scene, Render const& r);
   void write(Pixel const& p);
+  void tone_mapping(Color& clr);
 
   inline std::vector<Color> const& color_buffer() const {
     return color_buffer_;

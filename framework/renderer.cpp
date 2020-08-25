@@ -93,3 +93,10 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
   // return scene.ambient * material->ka + intensity_d * material->kd;
   // intensity_s * material->ks;
 }
+
+// tone mapping
+void Renderer::tone_mapping(Color& clr) {
+  clr.r = clr.r / (clr.r + 1);
+  clr.g = clr.g / (clr.g + 1);
+  clr.b = clr.b / (clr.b + 1);
+}
