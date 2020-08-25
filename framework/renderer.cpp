@@ -73,11 +73,10 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
   // simple lighting model
   Color kd_total;
   for (auto const& light : scene.lights) {
-    auto n_dot_i = glm::clamp(
-        std::abs(glm::dot(glm::normalize(ray.direction), hitpoint.normal)), 0.f,
-        1.f);
     auto hitpoint_to_light =
         Ray{hitpoint.point, glm::normalize(light.pos - hitpoint.point)};
+    auto n_dot_i = glm::clamp(
+        glm::dot(hitpoint.normal, hitpoint_to_light.direction), 0.f, 1.f);
     bool shadow = false;
     for (auto const& s : scene.shapes) {
       if (shape == s)
