@@ -2,8 +2,9 @@
 #define SHAPE_HPP
 #include "material.hpp"
 #include "hitpoint.hpp"
-#include <glm/gtx/intersect.hpp>
 #include "ray.hpp"
+#include <glm/gtx/intersect.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include <string>
 #include <memory>
 
@@ -16,6 +17,9 @@ class Shape {
     virtual ~Shape();
     std::shared_ptr<Material> const& material() const;
     std::string name() const;
+    virtual void rotate(float& angle, float& rx, float& ry, float& rz);
+    virtual void scale(float& sx, float& sy, float& sz);
+    virtual void translate(float& tx, float& ty, float& tz);
     virtual HitPoint intersect(Ray const& ray) const = 0;
     virtual std::ostream& print(std::ostream& os) const;
     virtual float area() const = 0;
