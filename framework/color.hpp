@@ -76,9 +76,9 @@ struct Color
   }
 
 
-  float r;
-  float g;
-  float b;
+  float r = 0.f;
+  float g = 0.f;
+  float b = 0.f;
 };
 
 #endif //#define BUW_COLOR_HPP
