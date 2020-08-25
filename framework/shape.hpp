@@ -24,7 +24,13 @@ class Shape {
   protected:
     std::string name_;
     std::shared_ptr<Material> material_;
+    glm::mat4 world_transform_;
+    glm::mat4 world_transform_inv_;
 
 };
+
+glm::vec3 transformOrigin(glm::mat4 const& mat, glm::vec3 const& point);
+glm::vec3 transformDirection(glm::mat4 const& mat, glm::vec3 const& point);
+Ray transformRay(glm::mat4 const& mat, Ray const& ray);
 
 #endif // SHAPE_HPP
