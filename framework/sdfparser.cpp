@@ -74,6 +74,8 @@ Scene read_from_sdf(std::string const& filename) {
           auto material = std::make_shared<Material>(material_it->second);
           Box b{p1, p2, name, material};
           scene.shapes.push_back(std::make_shared<Box>(b));
+        } else if ("composite" == object_name) {
+            // TODO
         } else {
           warn_unknown("shape", object_name, line);
         }

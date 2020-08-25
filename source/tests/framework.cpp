@@ -248,28 +248,29 @@ TEST_CASE("intersect Box", "[intersect]") {
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f}, 10.0f);
   Box b1{{-1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, 1.0f}, "Box", m1};
+  auto n = glm::vec3{1.0f, 0.0f, 0.0f};
   float t = 0.0f;
 
   /* testing ray inside */
-  /* REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}}, t) == true);
-  REQUIRE(t == Approx(sqrt(3.0f))); */
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}}, t, n) == true);
+  REQUIRE(t == -1.0f);
 
   /* testing sides */
-  /* REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {-1.0f, 0.0f, 0.0f}}, t) == true);
-  REQUIRE(b1.did_intersect(Ray{{-2.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t) == true);
+  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {-1.0f, 0.0f, 0.0f}}, t, n) == true);
+  REQUIRE(b1.did_intersect(Ray{{-2.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == true);
   REQUIRE(t == 1.0f);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, -1.0f, 0.0f}}, t) == true);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, -2.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t) == true);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, -1.0f, 0.0f}}, t, n) == true);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, -2.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == true);
   REQUIRE(t == 1.0f);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 0.0f, -1.0f}}, t) == true);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, 1.0f}}, t) == true);
-  REQUIRE(t == 1.0f); */
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 0.0f, -1.0f}}, t, n) == true);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, 1.0f}}, t, n) == true);
+  REQUIRE(t == 1.0f);
 
   /* testing parallel ray, intersection should be false */
-  /* REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t) == false);
-  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 1.0f, 0.0f}}, t) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {1.0f, 0.0f, 0.0f}}, t) == false); */
+  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == false); 
+  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t, n) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t, n) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == false);
+  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == false);
 }
