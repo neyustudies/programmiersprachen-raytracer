@@ -24,6 +24,7 @@ void Renderer::render(Scene const& scene, Render const& r) {
       // TODO: trace rays
       Ray ray = r.camera->ray(x, y, r.x_res, r.y_res);
       p.color = trace(ray, scene);
+      tone_mapping(p.color);
 
       write(p);
     }
