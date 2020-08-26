@@ -29,7 +29,7 @@ Scene read_from_sdf(std::string const& filename) {
     std::string identifier;
     in >> identifier;
 
-    if ("#" == identifier || identifier.empty()) {
+    if ("#" == identifier || identifier.empty() || identifier[0] == '#') {
       continue;
     } else if ("define" == identifier) {
       std::string class_name;
