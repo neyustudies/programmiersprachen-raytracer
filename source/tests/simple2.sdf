@@ -9,12 +9,13 @@ define shape sphere bsphere 0 0 -100 70 purple
 define shape sphere bsphere 5 5 -30 7 orange
 
 # light
-define light sun 800 1500 -100 1 1 1 .5
-define light sun2 100 -100 -100 1 1 1 .6
+define light sun 800 1500 -100 1 .5 .5 0.7
+define light sun2 100 -100 -100 .5 1 .5 0.7
+define light another_sun -300 130 100 .5 .5 1 2
 ambient .1 0 .1
 
 # camera
-define camera eye 45.0 0 0 0 0 0 -1 0 5 0
+define camera eye 45.0 0 0 0 0 0 -1 0 1 0
 
-render eye image2.ppm 512 512
-render eye image3.ppm 900 600
+render eye image.ppm 900 600
+# render eye image_4k.ppm 3840 2160
