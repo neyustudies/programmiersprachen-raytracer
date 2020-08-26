@@ -15,9 +15,9 @@ class Triangle : public Shape {
     HitPoint intersect(Ray const& ray) const override;
 
   private:
-    glm::vec3 point_1_;
-    glm::vec3 point_2_;
-    glm::vec3 point_3_;
+    glm::vec3 v0_;
+    glm::vec3 v1_;
+    glm::vec3 v2_;
 
 };
 
