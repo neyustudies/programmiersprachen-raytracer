@@ -1,7 +1,7 @@
 #ifndef UTIL_HPP
 #define UTIL_HPP
 
-#define EPSILON 0.0001
+#define EPSILON 0.000001
 
 template <typename T>
 inline bool in_between_epsilon(T min, T f, T max) {
