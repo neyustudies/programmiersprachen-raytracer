@@ -18,7 +18,8 @@ class Camera {
     /**
      * Get a ray onto the image plane at given pixel coordinates.
      */
-    Ray ray(unsigned x, unsigned y, unsigned res_x, unsigned res_y);
+    Ray ray(unsigned x, unsigned y, unsigned res_x, unsigned res_y) const;
+
     /* getter setter - to be removed if not needed */
     std::string name() const;
     void name(std::string const& name);
