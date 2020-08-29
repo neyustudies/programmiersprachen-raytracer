@@ -1,5 +1,6 @@
 #include "triangle.hpp"
 #include <cmath>
+#include <glm/gtx/intersect.hpp>
 
 Triangle::Triangle() :
   Shape {"Unnamed Triangle", nullptr},
@@ -46,13 +47,13 @@ HitPoint Triangle::intersect(Ray const& ray) const{
   Ray tray = transformRay(world_transform_inv_, ray);
   float distance = NAN; 
   tray.direction = glm::normalize(ray.direction);
-  glm::vec3 intersect(0);
+  glm::vec2 result(0);
   glm::vec3 intersection_point;
   glm::vec3 normal   = glm::cross(v1_ - v0_, v2_ - v0_);
   bool did_intersect = glm::intersectRayTriangle(tray.origin, 
                                                  tray.direction, 
                                                  v0_, v1_, v2_, 
-                                                 intersect);
+                                                 result, distance);
   if(did_intersect) {
      // 3d intersection point of ray and triangle
     glm::vec3 dir_vec = tray.direction - tray.origin;
