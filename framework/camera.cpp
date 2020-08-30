@@ -24,13 +24,9 @@ Camera::Camera(std::string const& name, float fov_x, glm::vec3 const& eye, glm::
   up_    {up} {}
 
 Ray Camera::ray(unsigned x, unsigned y, unsigned res_x, unsigned res_y) const {
-  Ray r{eye_};
   float d = ((float)res_x/2.f) / tan(fov_x_ * (M_PI / 180.f));
-  glm::vec3 s{(float)x - ((float)res_x / 2), (float)y - ((float)res_y / 2), -d};
-  r.direction = dir_ + s;
-
-  // TODO take rotation (up_) into account
-  return r;
+  glm::vec3 s{(float)x - ((float)res_x / 2), (float)y - ((float)res_y / 2), 0};
+  return {eye_, s + (d * glm::normalize(dir_))};
 }
 
 std::string Camera::name() const {
