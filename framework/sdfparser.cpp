@@ -1,13 +1,14 @@
 #include "sdfparser.hpp"
-#include "box.hpp"
-#include "camera.hpp"
-#include "color.hpp"
-#include "sphere.hpp"
-#include "render.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "box.hpp"
+#include "camera.hpp"
+#include "color.hpp"
+#include "render.hpp"
+#include "sphere.hpp"
+#include "triangle.hpp"
 
 Color parse_color(std::istringstream &in);
 glm::vec3 parse_vec3(std::istringstream &in);
@@ -67,8 +68,17 @@ Scene read_from_sdf(std::string const& filename) {
             continue;
           Box b{p1, p2, name, material};
           scene.shapes.push_back(std::make_shared<Box>(b));
+        } else if ("triangle" == object_name) {
+          auto a = parse_vec3(in);
+          auto b = parse_vec3(in);
+          auto c = parse_vec3(in);
+          auto material = parse_material(in, scene, line);
+          if (nullptr == material)
+            continue;
+          Triangle t{a, b, c, name, material};
+          scene.shapes.push_back(std::make_shared<Triangle>(t));
         } else if ("composite" == object_name) {
-            // TODO
+          // TODO
         } else {
           warn_unknown("shape", object_name, line);
         }
