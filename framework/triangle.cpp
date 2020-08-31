@@ -22,6 +22,18 @@ Triangle::Triangle(glm::vec3 const& v0, glm::vec3 const& v1, glm::vec3 const& v2
 
 Triangle::~Triangle() {}
 
+glm::vec3 Triangle::v0() const {
+  return v0_;
+}
+
+glm::vec3 Triangle::v1() const {
+  return v1_;
+}
+
+glm::vec3 Triangle::v2() const {
+  return v2_;
+}
+
 float Triangle::area() const {
   return glm::length(glm::cross(v1_ - v0_, v2_ - v0_) / 2.f);
 }
