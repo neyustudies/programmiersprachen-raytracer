@@ -3,6 +3,7 @@
 #include "sdfparser.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
+#include "triangle.hpp"
 
 
 TEST_CASE("sdf_parser", "[sdf]") {
@@ -25,7 +26,7 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(mat_blue.ks == blue);
     REQUIRE(1 == mat_blue.m);
 
-    REQUIRE(2 == s.shapes.size());
+    REQUIRE(3 == s.shapes.size());
     auto box = std::dynamic_pointer_cast<Box>(s.shapes[0]);
     REQUIRE("rbottom" == box->name());
     glm::vec3 min{-100, -80, -200};
@@ -39,6 +40,16 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(center == sphere->center());
     REQUIRE(50 == Approx(sphere->radius()));
     REQUIRE(mat_blue == *(sphere->material()));
+    auto triangle = std::dynamic_pointer_cast<Triangle>(s.shapes[2]);
+    glm::vec3 triangle_a{-1, -1, -1};
+    glm::vec3 triangle_b{4, 4, 4};
+    glm::vec3 triangle_c{10, 20, -15};
+    REQUIRE(mat_blue == *(triangle->material()));
+    REQUIRE(triangle_a == triangle->v0());
+    REQUIRE(triangle_b == triangle->v1());
+    REQUIRE(triangle_c == triangle->v2());
+    REQUIRE(0 == triangle->volume());
+    REQUIRE(Approx(110.397) == triangle->area());
 
     REQUIRE(1 == s.lights.size());
     auto light = s.lights[0];
