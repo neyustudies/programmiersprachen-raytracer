@@ -45,7 +45,7 @@ Ray transformRay(glm::mat4 const& mat, Ray const& ray) {
   glm::vec4 origin{ray.origin, 1};
   glm::vec4 direction{ray.direction, 0};
   return Ray{glm::vec3{mat * origin}, glm::vec3{mat * direction}};
-}}
+}
 
 void transformBack(HitPoint hit, glm::mat4 const& mat, glm::mat4 const& mat_inv_trans) {
   hit.point = glm::vec3{mat * glm::vec4{hit.point, 1.0f}};
