@@ -26,7 +26,8 @@ jobs:
         libglu1-mesa-dev \
         freeglut3-dev \
         libxi-dev \
-        libxrandr-dev
+        libxrandr-dev \
+        imagemagick
 
     - name: build
       run: |
@@ -39,3 +40,14 @@ jobs:
       run: |
         cd build
         source/tests
+
+    - name: test render
+      run: |
+          build/source/raytracer source/tests/simple2.sdf
+          convert image.ppm render.png
+
+    - name: upload test render
+      uses: actions/upload-artifact@v2
+      with:
+          path: render.png
+
