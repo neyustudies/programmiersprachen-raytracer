@@ -71,13 +71,23 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
                       Scene const& scene) {
   std::shared_ptr<Material> material = shape->material();
 
-  // simple lighting model
+  Color ka_total = scene.ambient * material->ka;  // ambient
   Color kd_total;
+  Color ks_total;
   for (auto const& light : scene.lights) {
+    // diffuse
     auto hitpoint_to_light =
         Ray{hitpoint.point, glm::normalize(light.pos - hitpoint.point)};
-    auto n_dot_i = glm::clamp(
-        glm::dot(hitpoint.normal, hitpoint_to_light.direction), 0.f, 1.f);
+    auto n = hitpoint.normal;
+    auto i = hitpoint_to_light.direction;
+    auto n_dot_i = glm::clamp(glm::dot(n, i), 0.f, 1.f);
+
+    // specular
+    auto r = i - 2 * glm::dot(i, n) * n;
+    auto v = hitpoint.direction;
+    auto r_dot_v = glm::clamp(glm::dot(r, v), 0.f, 1.f);
+
+    // shadow test
     bool shadow = false;
     for (auto const& s : scene.shapes) {
       if (shape == s)
@@ -85,13 +95,15 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
       if (s->intersect(hitpoint_to_light).did_intersect)
         shadow = true;
     }
-    if (!shadow)
-      kd_total += light.brightness * light.color * material->kd * n_dot_i;
+    if (!shadow) {
+      auto l = light.brightness * light.color;
+      kd_total += l * material->kd * n_dot_i;
+      ks_total += l * material->ks * std::pow(r_dot_v, material->m);
+    }
   }
 
-  return scene.ambient * material->ka + kd_total;
-  // return scene.ambient * material->ka + intensity_d * material->kd;
-  // intensity_s * material->ks;
+  ks_total = Color{}; // TODO fix specular, delete this line
+  return ka_total + kd_total + ks_total;
 }
 
 // tone mapping
