@@ -13,6 +13,7 @@ class Cylinder : public Shape {
     Cylinder(glm::vec3 const& v0, float r, float h, std::string const& name, 
              std::shared_ptr<Material> const& material);
     ~Cylinder();
+    glm::vec3 v0() const;
     float height() const;
     float radius() const;
     float volume() const override;

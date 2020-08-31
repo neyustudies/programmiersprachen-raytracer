@@ -21,6 +21,10 @@ Cylinder::Cylinder(glm::vec3 const& v0, float r, float h, std::string const& nam
 
 Cylinder::~Cylinder() {}
 
+glm::vec3 Cylinder::v0() const {
+  return v0_;
+}
+
 float Cylinder::height() const {
   return height_;
 }
@@ -38,9 +42,11 @@ float Cylinder::area() const {
 }
 
 HitPoint Cylinder::intersect(Ray const& ray) const {
-  // TODO
+  HitPoint hit;
   Ray tray = transformRay(world_transform_inv_, ray);
   auto tray_direction = glm::normalize(tray.direction);
   float distance = NAN;
-  return HitPoint{};
+  //...
+  transformBack(hit, world_transform_, glm::transpose(world_transform_inv_));
+  return hit;
 }
