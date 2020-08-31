@@ -44,23 +44,27 @@ HitPoint Sphere::intersect(Ray const& ray) const {
   Ray tray = transformRay(world_transform_inv_, ray);
   auto tray_direction = glm::normalize(tray.direction);
   float distance = NAN;
-  bool did_intersect = glm::intersectRaySphere(
-      tray.origin,           // rayStarting
-      tray_direction,        // rayNormalizedDirection
-      center_,               // sphereCenter
-      std::pow(radius_, 2),  // sphereRadiusSquared
-      distance               // intersectionDistance
-      );
-  auto intersection_point = tray.origin + (distance * tray_direction);
-  return HitPoint{
-      did_intersect,
-      distance,
-      name_,
-      material_->ka,
-      intersection_point,
-      ray.direction,
-      glm::normalize(intersection_point - center_)
-  };
+  HitPoint hit;
+  hit.did_intersect = glm::intersectRaySphere(
+    tray.origin,           // rayStarting
+    tray_direction,        // rayNormalizedDirection
+    center_,               // sphereCenter
+    std::pow(radius_, 2),  // sphereRadiusSquared
+    distance               // intersectionDistance
+    );
+  
+  if(hit.did_intersect) {
+    hit.point     = tray.origin + (distance * tray_direction);
+    hit.t         = glm::distance(tray.origin, hit.point);
+    hit.name      = name_;
+    hit.clr       = material_->ka;
+    hit.direction = tray.direction;
+    hit.normal    = glm::normalize(hit.point - center_);
+  }
+
+  transformBack(hit, world_transform_, glm::transpose(world_transform_inv_));
+
+  return hit;
 }
 
 std::ostream& Sphere::print(std::ostream& os) const {
