@@ -38,6 +38,10 @@ float Triangle::area() const {
   return glm::length(glm::cross(v1_ - v0_, v2_ - v0_) / 2.f);
 }
 
+float Triangle::volume() const {
+  return 0;
+}
+
 HitPoint Triangle::intersect(Ray const& ray) const{
   Ray tray = transformRay(world_transform_inv_, ray);
   float distance = NAN; 
