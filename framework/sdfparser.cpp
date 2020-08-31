@@ -11,6 +11,9 @@
 
 Color parse_color(std::istringstream &in);
 glm::vec3 parse_vec3(std::istringstream &in);
+std::shared_ptr<Material> parse_material(std::istringstream& in,
+                                         Scene const& scene,
+                                         int line);
 
 void warn_unknown(std::string what, std::string name, int line) {
   std::cerr << "[Warning][SDF] In line " << line << ", ignoring unknown "
@@ -51,27 +54,17 @@ Scene read_from_sdf(std::string const& filename) {
           auto center = parse_vec3(in);
           float radius;
           in >> radius;
-          std::string material_name;
-          in >> material_name;
-          auto material_it = scene.materials.find(material_name);
-          if (scene.materials.end() == material_it) {
-            warn_unknown("material", material_name, line);
+          auto material = parse_material(in, scene, line);
+          if (nullptr == material)
             continue;
-          }
-          auto material = std::make_shared<Material>(material_it->second);
           Sphere s{center, radius, name, material};
           scene.shapes.push_back(std::make_shared<Sphere>(s));
         } else if ("box" == object_name) {
           auto p1 = parse_vec3(in);
           auto p2 = parse_vec3(in);
-          std::string material_name;
-          in >> material_name;
-          auto material_it = scene.materials.find(material_name);
-          if (scene.materials.end() == material_it) {
-            warn_unknown("material", material_name, line);
+          auto material = parse_material(in, scene, line);
+          if (nullptr == material)
             continue;
-          }
-          auto material = std::make_shared<Material>(material_it->second);
           Box b{p1, p2, name, material};
           scene.shapes.push_back(std::make_shared<Box>(b));
         } else if ("composite" == object_name) {
@@ -136,4 +129,17 @@ glm::vec3 parse_vec3(std::istringstream &in) {
   float x, y, z;
   in >> x >> y >> z;
   return glm::vec3{x, y, z};
+}
+
+std::shared_ptr<Material> parse_material(std::istringstream& in,
+                                         Scene const& scene,
+                                         int line) {
+  std::string material_name;
+  in >> material_name;
+  auto material_it = scene.materials.find(material_name);
+  if (scene.materials.end() == material_it) {
+    warn_unknown("material", material_name, line);
+    return nullptr;
+  }
+  return std::make_shared<Material>(material_it->second);
 }
