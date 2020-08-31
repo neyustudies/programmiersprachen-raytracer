@@ -4,7 +4,8 @@
 #include <catch.hpp>
 #include "shape.hpp"
 #include "sphere.hpp"
-#include "box.hpp" 
+#include "box.hpp"
+#include "triangle.hpp"
 #include "material.hpp"
 
 
@@ -108,21 +109,21 @@ TEST_CASE("intersect sphere", "[intersect]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f}, 10.0f);
-  SECTION("sphere with center, radius, name, color") {
-    Sphere sphere{{1,2,4},2,"Kugel", m1};
-    Ray ray{{1,0,2},{0,0,2}};
+  SECTION("intersected sphere") {
+    Sphere sphere{{0,0,5},1,"Kugel", m1};
+    Ray ray{{0,0,0},{0,0,1}};
     HitPoint result = sphere.intersect(ray);
     REQUIRE(result.did_intersect);
-    REQUIRE(result.t == 2.0f);
+    REQUIRE(result.t == Approx(4.0f));
     REQUIRE(result.name == "Kugel");
-    REQUIRE(result.point.x == 1.0f);
+    REQUIRE(result.point.x == 0.0f);
     REQUIRE(result.point.y == 0.0f);
     REQUIRE(result.point.z == 4.0f);
     REQUIRE(result.direction.x == 0.0f);
     REQUIRE(result.direction.y == 0.0f);
     REQUIRE(result.direction.z == 1.0f);
   }
-  SECTION("sphere without name and color") {
+  SECTION("intersected sphere 2") {
     Sphere noname{{1,2,4},2, "Sphere", m1};
     Ray ray{{1,0,2},{0,0,2}};
     HitPoint hit = noname.intersect(ray);
@@ -134,7 +135,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
     REQUIRE(hit.point.z == 4.0f);
     REQUIRE(hit.direction.x == 0.0f);
     REQUIRE(hit.direction.y == 0.0f);
-    REQUIRE(hit.direction.z == 1.0f);
+    REQUIRE(hit.direction.z == 2.0f);
   }
   SECTION("sphere that is not hit") {
     Sphere sphere{{1,2,4},2,"Kugel", m1};
@@ -274,3 +275,18 @@ TEST_CASE("intersect Box", "[intersect]") {
   REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == false);
   REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == false);
 }
+
+/* TEST_CASE("intersect triangle", "[intersect]") {
+  auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
+                                               Color{0.1f, 0.4f, 0.9f}, 
+                                               Color{0.0f, 0.5f, 0.6f}, 10.0f);
+  Triangle t1({1, 0, 1}, {1, 0, -1}, {1, 1, 0}, "Triangle", m1);
+  Ray ray{{0, 0, 0}, {1, 0, 0}};
+  HitPoint hit = t1.intersect(ray);
+  REQUIRE(hit.did_intersect);
+  REQUIRE(hit.name == "Triangle");
+  REQUIRE(hit.direction == ray.direction);
+  REQUIRE(hit.normal.x == 1.0f);
+  REQUIRE(hit.normal.y == 0);
+  REQUIRE(hit.normal.z == 0);
+} */
