@@ -36,6 +36,6 @@ class Shape {
 // transform ray to local space
 Ray transformRay(glm::mat4 const& mat, Ray const& ray);
 // transform intersection point and normal back to world space
-void transformBack(HitPoint hit, glm::mat4 const& mat, glm::mat4 const& mat_inv_trans);
+void transformBack(HitPoint& hit, glm::mat4 const& mat, glm::mat4 const& mat_inv_trans);
 
 #endif // SHAPE_HPP

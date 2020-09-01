@@ -1,14 +1,14 @@
 #include "shape.hpp"
 
 Shape::Shape() :
-  name_ {"Unnamed Shape"},
+  name_     {"Unnamed Shape"},
   material_ {nullptr} {}
 
 Shape::Shape(std::string const& name) :
   name_ {name} {}
 
 Shape::Shape(std::string const& name, std::shared_ptr<Material> const& material) :
-  name_ {name},
+  name_     {name},
   material_ {material} {}
 
 Shape::~Shape() {}
@@ -47,7 +47,7 @@ Ray transformRay(glm::mat4 const& mat, Ray const& ray) {
   return Ray{glm::vec3{mat * origin}, glm::vec3{mat * direction}};
 }
 
-void transformBack(HitPoint hit, glm::mat4 const& mat, glm::mat4 const& mat_inv_trans) {
-  hit.point = glm::vec3{mat * glm::vec4{hit.point, 1.0f}};
-  hit.normal = glm::normalize(glm::vec3{(mat_inv_trans * glm::vec4{hit.normal, 0.0f})});
+void transformBack(HitPoint& hit, glm::mat4 const& mat, glm::mat4 const& mat_inv_trans) {
+  hit.point  = glm::vec3{mat * glm::vec4{hit.point, 1.0f}};
+  hit.normal = glm::normalize(glm::vec3{mat_inv_trans * glm::vec4{hit.normal, 0.0f}});
 }
