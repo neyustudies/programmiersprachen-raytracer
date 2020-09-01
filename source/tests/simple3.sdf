@@ -1,0 +1,22 @@
+# materials
+define material orange 1 .6 .2 1 .6 .2 1 .6 .2 1
+define material purple .7 .3 1 .7 .3 1 .7 .3 1 1
+define material green .5 1 .2 .5 1 .2 .5 1 .2 1
+
+# geometry
+define shape sphere bsphere 0 0 -100 50 purple
+define shape sphere bsphere 5 -5 -30 6 orange
+define shape sphere bsphere -15 20 -35 10 green
+define shape sphere bsphere -10 0 -20 4 purple
+
+# light
+define light sun 800 1500 -100 1 .5 .5 2
+define light sun2 100 -100 -100 .5 1 .5 2
+define light another_sun -200 130 100 .2 .5 .8 1.5
+ambient .1 0 .1
+
+# camera
+define camera eye 45.0 0 0 0 0 0 -1 0 1 0
+
+# render eye image.ppm 900 600
+render eye image.ppm 3840 2160
