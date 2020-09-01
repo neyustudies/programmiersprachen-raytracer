@@ -94,23 +94,24 @@ bool Box::did_intersect(Ray const& ray, float& t, glm::vec3& normal) const {
 }
 
 HitPoint Box::intersect(Ray const& ray) const {
-  glm::vec3 hitpoint;
-  glm::vec3 vec = hitpoint - ray.origin;
-  float d = std::sqrt(std::pow(vec.x, 2) +  // TODO: unused?
-                      std::pow(vec.y, 2) +
-                      std::pow(vec.z, 2));
+  HitPoint hit;
+  Ray tray = transformRay(world_transform_inv_, ray);
+  tray.direction = glm::normalize(tray.direction);
   float t = NAN;
   glm::vec3 normal;
-  bool intersect = did_intersect(ray, t, normal);
-  return HitPoint{
-      intersect,
-      t,
-      name_,
-      material_->ka,
-      hitpoint,
-      ray.direction,
-      normal
-  };
+  hit.did_intersect = did_intersect(tray, t, normal);
+  
+  if(hit.did_intersect) {
+    hit.point     = tray.origin + (tray.direction * hit.t);
+    hit.direction = tray.direction;
+    hit.t         = glm::distance(hit.point, tray.origin);
+    hit.clr       = material_->ka;
+    hit.normal    = normal;
+    hit.name      = name_;
+  }
+
+  transformBack(hit, world_transform_, glm::transpose(world_transform_inv_));
+  return hit;
 }
 
 
