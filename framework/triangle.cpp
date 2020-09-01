@@ -14,7 +14,7 @@ Triangle::Triangle(glm::vec3 const& v0, glm::vec3 const& v1, glm::vec3 const& v2
   v2_   {v2} {}
 
 Triangle::Triangle(glm::vec3 const& v0, glm::vec3 const& v1, glm::vec3 const& v2, 
-                   std::string const& name, std::shared_ptr<Material> const material) :
+                   std::string const& name, std::shared_ptr<Material> const& material) :
   Shape {name, material},
   v0_   {v0},
   v1_   {v1},
