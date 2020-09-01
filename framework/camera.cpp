@@ -33,40 +33,18 @@ std::string Camera::name() const {
   return name_;
 }
 
-void Camera::name(std::string const& name) {
-  name_ = name;
-}
-
 float Camera::fov_x() const {
   return fov_x_;
-}
-
-void Camera::fov_x(float fov_x) {
-  fov_x_ = fov_x;
 }
 
 glm::vec3 Camera::eye() const {
   return eye_;
 }
 
-void Camera::eye(glm::vec3 const& eye) {
-  eye_ = eye;
-}
-
 glm::vec3 Camera::dir() const {
   return dir_;
-}
-
-void Camera::dir(glm::vec3 const& dir) {
-  dir_ = dir;
 }
 
 glm::vec3 Camera::up() const {
   return up_;
 }
-
-void Camera::up(glm::vec3 const& up) {
-  up_ = up;
-}
-
-/* to be added: method to construct a camera ray */

@@ -20,17 +20,11 @@ class Camera {
      */
     Ray ray(unsigned x, unsigned y, unsigned res_x, unsigned res_y) const;
 
-    /* getter setter - to be removed if not needed */
     std::string name() const;
-    void name(std::string const& name);
     float fov_x() const;
-    void fov_x(float fov_x);
     glm::vec3 eye() const;
-    void eye(glm::vec3 const& eye);
     glm::vec3 dir() const;
-    void dir(glm::vec3 const& dir);
     glm::vec3 up() const;
-    void up(glm::vec3 const& up);
 
   private:
     std::string name_;
