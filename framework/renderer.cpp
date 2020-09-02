@@ -102,7 +102,6 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
     }
   }
 
-  ks_total = Color{}; // TODO fix specular, delete this line
   return ka_total + kd_total + ks_total;
 }
 
