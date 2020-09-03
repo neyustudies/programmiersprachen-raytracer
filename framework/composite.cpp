@@ -43,9 +43,9 @@ void Composite::translate(glm::vec3 const& point) {
 
 HitPoint Composite::intersect(Ray const& ray) const {
   HitPoint first_hit;
-  Ray tray = transformRay(Shape::world_transform_inv_, ray);
-  for(auto child : shapes_) {
-    HitPoint hit = child->intersect(tray);
+  Ray tray = transformRay(world_transform_inv_, ray);
+  for(auto shape : shapes_) {
+    HitPoint hit = shape->intersect(tray);
     if(hit.t < first_hit.t) {
       first_hit = hit;
     }
