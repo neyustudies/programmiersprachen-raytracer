@@ -6,6 +6,9 @@
 #include <iostream>
 #include <sstream>
 
+enum Transformation {ROTATE, SCALE, TRANSLATE};
+enum Axis {X, Y, Z, XY, XZ, YZ, XYZ};
+
 class Animation {
 
   public:
@@ -29,10 +32,7 @@ class Animation {
     unsigned int pace_  = 0;
     unsigned int start_ = 0;
     unsigned int end_   = 0;
-    
-};
 
-enum Transformation {ROTATE, SCALE, TRANSLATE};
-enum Axis {X, Y, Z, XY, XZ, YZ, XYZ};
+};
 
 #endif //ANIMATION_HPP
