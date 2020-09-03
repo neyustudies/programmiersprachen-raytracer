@@ -40,6 +40,17 @@ void Shape::translate(glm::vec3 const& point) {
   world_transform_inv_ = glm::inverse(world_transform_);
 }
 
+/* check for intersections with all existing shapes */
+void Shape::find_intersected_shapes(HitPoint& first_hit, Ray const& ray) const {
+  HitPoint hit = intersect(ray);
+  if(hit.did_intersect) {
+    hit.t = glm::distance(hit.point, ray.origin);
+    if(first_hit.t > hit.t) {
+      first_hit = hit;
+    }
+  }
+}
+
 std::ostream& Shape::print(std::ostream& os) const {
   return os << "\nShape\n-----\n" << "Name:    " << name_ << "\n";
 }

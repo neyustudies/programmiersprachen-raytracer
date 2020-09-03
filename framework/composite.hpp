@@ -17,6 +17,7 @@ class Composite : public Shape {
     void rotate(float& angle, glm::vec3 const& axis) override;
     void scale(glm::vec3 const& point) override;
     void translate(glm::vec3 const& point) override;
+    void find_intersected_shapes(HitPoint& first_hit, Ray const& ray) const override;
     HitPoint intersect(Ray const& ray) const override;
 
   private:

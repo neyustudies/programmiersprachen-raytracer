@@ -21,7 +21,8 @@ class Shape {
     
     virtual void rotate(float& angle, glm::vec3 const& axis);
     virtual void scale(glm::vec3 const& point);
-    virtual void translate(glm::vec3 const& point);   
+    virtual void translate(glm::vec3 const& point);
+    virtual void find_intersected_shapes(HitPoint& first_hit, Ray const& ray) const;  
     virtual HitPoint intersect(Ray const& ray) const = 0;
     virtual std::ostream& print(std::ostream& os) const;
     virtual float area() const = 0;
