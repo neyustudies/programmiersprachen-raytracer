@@ -9,15 +9,18 @@ class Composite : public Shape {
     Composite();
     Composite(std::string const& name);
     ~Composite();
+    
+    void add(std::shared_ptr<Shape> const& shape);
+
     float area() const override;
     float volume() const override;
-    void add(std::shared_ptr<Shape> const& shape);
+    void rotate(float& angle, glm::vec3 const& axis) override;
+    void scale(glm::vec3 const& point) override;
+    void translate(glm::vec3 const& point) override;
     HitPoint intersect(Ray const& ray) const override;
-    //void add(std::shared_ptr<Composite> const& composite);
 
   private:
     std::vector<std::shared_ptr<Shape>> shapes_;
-    //std::vector<std::shared_ptr<Composite>> composites_;
 
 };
 
