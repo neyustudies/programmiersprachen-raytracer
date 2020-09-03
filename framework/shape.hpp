@@ -17,9 +17,9 @@ class Shape {
     virtual ~Shape();
     std::shared_ptr<Material> const& material() const;
     std::string name() const;
-    virtual void rotate(float& angle, float& rx, float& ry, float& rz);
-    virtual void scale(float& sx, float& sy, float& sz);
-    virtual void translate(float& tx, float& ty, float& tz);
+    virtual void rotate(float& angle, glm::vec3 const& axis);
+    virtual void scale(glm::vec3 const& point);
+    virtual void translate(glm::vec3 const& point);
     virtual HitPoint intersect(Ray const& ray) const = 0;
     virtual std::ostream& print(std::ostream& os) const;
     virtual float area() const = 0;
@@ -33,9 +33,7 @@ class Shape {
 
 };
 
-// transform ray to local space
 Ray transformRay(glm::mat4 const& mat, Ray const& ray);
-// transform intersection point and normal back to world space
 void transformBack(HitPoint& hit, glm::mat4 const& mat, glm::mat4 const& mat_inv_trans);
 
 #endif // SHAPE_HPP
