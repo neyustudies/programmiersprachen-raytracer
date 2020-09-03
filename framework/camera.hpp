@@ -18,7 +18,7 @@ class Camera {
     /**
      * Get a ray onto the image plane at given pixel coordinates.
      */
-    Ray ray(unsigned x, unsigned y, unsigned res_x, unsigned res_y) const;
+    Ray ray(float x, float y, unsigned res_x, unsigned res_y) const;
 
     std::string name() const;
     float fov_x() const;

@@ -14,4 +14,4 @@ ambient .1 0 .1
 # camera
 define camera eye 45.0 0 0 0 0 0 -1 0 5 0
 
-render eye image.ppm 480 320
+render eye image.ppm 480 320 16

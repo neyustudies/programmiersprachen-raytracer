@@ -21,9 +21,14 @@ void Renderer::render(Scene const& scene, Render const& r) {
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p{x, y};
-      // TODO: trace rays
-      Ray ray = r.camera->ray(x, y, r.x_res, r.y_res);
-      p.color = trace(ray, scene);
+      float subpixel_step = (1.f/std::sqrt(r.subpixels));
+      for (float sub_x = 0; sub_x < 1; sub_x += subpixel_step) {
+        for (float sub_y = 0; sub_y < 1; sub_y += subpixel_step) {
+          // TODO: trace rays
+          Ray ray = r.camera->ray(x + sub_x, y + sub_y, r.x_res, r.y_res);
+          p.color += trace(ray, scene) * (1.f/r.subpixels);
+        }
+      }
       tone_mapping(p.color);
 
       write(p);

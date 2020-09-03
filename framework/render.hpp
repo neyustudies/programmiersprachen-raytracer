@@ -14,6 +14,8 @@ struct Render {
   std::string filename;
   unsigned x_res;
   unsigned y_res;
+  /** Number of subpixels used for antialiasing.  Set to 1 to disable AA. */
+  unsigned subpixels = 1;
 };
 
 #endif  // RENDER_HPP

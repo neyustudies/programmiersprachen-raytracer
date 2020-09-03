@@ -80,5 +80,6 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE("image.ppm" == render.filename);
     REQUIRE(480 == render.x_res);
     REQUIRE(320 == render.y_res);
+    REQUIRE(16 == render.subpixels);
   }
 }
