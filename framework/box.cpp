@@ -1,9 +1,9 @@
 #include "box.hpp"
-#include "hitpoint.hpp"
-#include "util.hpp"
+#include <algorithm>
 #include <cmath>
 #include <vector>
-#include <algorithm>
+#include "hitpoint.hpp"
+#include "util.hpp"
 
 Box::Box() :
   Shape {"Unnamed Box"},
@@ -47,72 +47,58 @@ float Box::volume() const {
          std::abs(max_.z - min_.z);
 }
 
-bool Box::did_intersect(Ray const& ray, float& t, glm::vec3& normal) const {
-  bool result = false;
-  glm::vec3 hitpoint;
-  if(ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {
-    throw "direction should not be zero";
-  } else {
-    std::vector<float> distance;
+HitPoint Box::hitpoint(Ray const& ray) const {
+  std::vector<float> distances;
 
-    float minX = (min_.x - ray.origin.x) / ray.direction.x;
-    float maxX = (max_.x - ray.origin.x) / ray.direction.x;
-    float minY = (min_.y - ray.origin.y) / ray.direction.y;
-    float maxY = (max_.y - ray.origin.y) / ray.direction.y;
-    float minZ = (min_.z - ray.origin.z) / ray.direction.z;
-    float maxZ = (max_.z - ray.origin.z) / ray.direction.z;
+  float minX = (min_.x - ray.origin.x) / ray.direction.x;
+  float maxX = (max_.x - ray.origin.x) / ray.direction.x;
+  float minY = (min_.y - ray.origin.y) / ray.direction.y;
+  float maxY = (max_.y - ray.origin.y) / ray.direction.y;
+  float minZ = (min_.z - ray.origin.z) / ray.direction.z;
+  float maxZ = (max_.z - ray.origin.z) / ray.direction.z;
 
-    distance.push_back(minX);
-    distance.push_back(maxX);
-    distance.push_back(minY);
-    distance.push_back(maxY);
-    distance.push_back(minZ);
-    distance.push_back(maxZ);
+  distances.push_back(minX);
+  distances.push_back(maxX);
+  distances.push_back(minY);
+  distances.push_back(maxY);
+  distances.push_back(minZ);
+  distances.push_back(maxZ);
 
-    std::sort(distance.begin(), distance.end());
-    for(auto i : distance) {
-      if(!std::isinf(i)) {
-        hitpoint = ray.origin + (i * ray.direction);
-        if(
-            in_between_epsilon(min_.x, hitpoint.x, max_.x) &&
-            in_between_epsilon(min_.y, hitpoint.y, max_.y) &&
-            in_between_epsilon(min_.z, hitpoint.z, max_.z)) {
-             t = i;
-             result = true;
-             if (maxX == i) normal = {1, 0, 0};
-             if (minX == i) normal = {-1, 0, 0};
-             if (maxY == i) normal = {0, 1, 0};
-             if (minY == i) normal = {0, -1, 0};
-             if (maxZ == i) normal = {0, 0, 1};
-             if (minZ == i) normal = {0, 0, -1};
-             return result;
-           }
+  std::sort(distances.begin(), distances.end());
+  for (auto d : distances) {
+    if (!std::isinf(d)) {
+      glm::vec3 hitpoint = ray.origin + (d * ray.direction);
+      if (  // intersection!
+          in_between_epsilon(min_.x, hitpoint.x, max_.x) &&
+          in_between_epsilon(min_.y, hitpoint.y, max_.y) &&
+          in_between_epsilon(min_.z, hitpoint.z, max_.z)) {
+        glm::vec3 normal{};
+        if (maxX == d) normal = {1, 0, 0};
+        if (minX == d) normal = {-1, 0, 0};
+        if (maxY == d) normal = {0, 1, 0};
+        if (minY == d) normal = {0, -1, 0};
+        if (maxZ == d) normal = {0, 0, 1};
+        if (minZ == d) normal = {0, 0, -1};
+        return {true, d, name_, material_->ka, hitpoint, ray.direction, normal};
       }
     }
   }
-  return result;
+  return {};
 }
 
 HitPoint Box::intersect(Ray const& ray) const {
-  HitPoint hit;
-  Ray tray = transformRay(world_transform_inv_, ray);
-  float t = NAN;
-  glm::vec3 normal;
-  hit.did_intersect = did_intersect(tray, t, normal);
+  material_->ks = Color{};  // XXX TODO remove when specular on boxes is fixed
 
-  if(hit.did_intersect) {
-    hit.point     = tray.origin + (tray.direction * t);
-    hit.direction = tray.direction;
-    hit.t         = t;
-    hit.clr       = material_->ka;
-    hit.normal    = normal;
-    hit.name      = name_;
-  }
+  if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0)
+    throw "direction should not be zero";
+
+  Ray tray = transformRay(world_transform_inv_, ray);
+
+  auto hit = hitpoint(ray);
 
   transformBack(hit, world_transform_, glm::transpose(world_transform_inv_));
   return hit;
 }
-
 
 std::ostream& Box::print(std::ostream& os) const {
   Shape::print(os);
