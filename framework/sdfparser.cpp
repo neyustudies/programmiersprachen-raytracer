@@ -117,7 +117,9 @@ Scene read_from_sdf(std::string const& filename) {
       in >> x_res;
       unsigned y_res;
       in >> y_res;
-      Render render{camera, filename, x_res, y_res};
+      unsigned subpixels;
+      in >> subpixels;
+      Render render{camera, filename, x_res, y_res, subpixels};
       scene.renders.push_back(render);
     } else {
       warn_unknown("identifier", identifier, line);
