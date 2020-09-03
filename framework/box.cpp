@@ -101,9 +101,9 @@ HitPoint Box::intersect(Ray const& ray) const {
   hit.did_intersect = did_intersect(tray, t, normal);
 
   if(hit.did_intersect) {
-    hit.point     = tray.origin + (tray.direction * hit.t);
+    hit.point     = tray.origin + (tray.direction * t);
     hit.direction = tray.direction;
-    hit.t         = glm::distance(hit.point, tray.origin);
+    hit.t         = t;
     hit.clr       = material_->ka;
     hit.normal    = normal;
     hit.name      = name_;
