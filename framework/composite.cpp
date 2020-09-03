@@ -41,16 +41,10 @@ void Composite::translate(glm::vec3 const& point) {
   }
 }
 
-void Composite::find_intersected_shapes(HitPoint& first_hit, Ray const& ray) const {
-  for(auto const shape : shapes_) {
-    shape->find_intersected_shapes(first_hit, ray);
-  }
-}
-
 HitPoint Composite::intersect(Ray const& ray) const {
   HitPoint first_hit;
   Ray tray = transformRay(world_transform_inv_, ray);
-  for(auto const shape : shapes_) {
+  for(auto shape : shapes_) {
     HitPoint hit = shape->intersect(tray);
     if(hit.t < first_hit.t) {
       first_hit = hit;
