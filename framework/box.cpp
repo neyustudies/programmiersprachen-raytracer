@@ -96,11 +96,10 @@ bool Box::did_intersect(Ray const& ray, float& t, glm::vec3& normal) const {
 HitPoint Box::intersect(Ray const& ray) const {
   HitPoint hit;
   Ray tray = transformRay(world_transform_inv_, ray);
-  //tray.direction = glm::normalize(tray.direction);
   float t = NAN;
   glm::vec3 normal;
   hit.did_intersect = did_intersect(tray, t, normal);
-  
+
   if(hit.did_intersect) {
     hit.point     = tray.origin + (tray.direction * hit.t);
     hit.direction = tray.direction;

@@ -45,7 +45,6 @@ float Cone::volume() const {
 HitPoint Cone::intersect(Ray const& ray) const {
   HitPoint hit;
   Ray tray = transformRay(world_transform_inv_, ray);
-  tray.direction = glm::normalize(tray.direction);
   glm::vec3 d = glm::vec3(base_.x - tray.origin.x,
                           base_.y - tray.origin.y + height_,
                           base_.z - tray.origin.z);
