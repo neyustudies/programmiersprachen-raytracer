@@ -249,44 +249,39 @@ TEST_CASE("intersect Box", "[intersect]") {
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f}, 10.0f);
   Box b1{{-1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, 1.0f}, "Box", m1};
-  auto n = glm::vec3{1.0f, 0.0f, 0.0f};
-  float t = 0.0f;
-
   /* testing ray inside */
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}}, t, n) == true);
-  REQUIRE(t == -1.0f);
+  HitPoint h1 = b1.intersect(Ray{{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}});
+  REQUIRE(h1.did_intersect);
+  REQUIRE(h1.t == -1.0f);
 
   /* testing sides */
-  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {-1.0f, 0.0f, 0.0f}}, t, n) == true);
-  REQUIRE(b1.did_intersect(Ray{{-2.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == true);
-  REQUIRE(t == 1.0f);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, -1.0f, 0.0f}}, t, n) == true);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, -2.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == true);
-  REQUIRE(t == 1.0f);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 0.0f, -1.0f}}, t, n) == true);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, 1.0f}}, t, n) == true);
-  REQUIRE(t == 1.0f);
+  HitPoint h2 = b1.intersect(Ray{{2.0f, 0.0f, 0.0f}, {-1.0f, 0.0f, 0.0f}});
+  HitPoint h3 = b1.intersect(Ray{{-2.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}});
+  HitPoint h4 = b1.intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, -1.0f, 0.0f}});
+  HitPoint h5 = b1.intersect(Ray{{0.0f, -2.0f, 0.0f}, {0.0f, 1.0f, 0.0f}});
+  HitPoint h6 = b1.intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 0.0f, -1.0f}});
+  HitPoint h7 = b1.intersect(Ray{{0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, 1.0f}}); 
+  REQUIRE(h2.did_intersect); 
+  REQUIRE(h3.did_intersect);
+  REQUIRE(h3.t == 1.0f);
+  REQUIRE(h4.did_intersect);
+  REQUIRE(h5.did_intersect);
+  REQUIRE(h5.t == 1.0f);
+  REQUIRE(h6.did_intersect);
+  REQUIRE(h7.did_intersect);
+  REQUIRE(h7.t == 1.0f);
 
   /* testing parallel ray, intersection should be false */
-  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == false); 
-  REQUIRE(b1.did_intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t, n) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, t, n) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 1.0f, 0.0f}}, t, n) == false);
-  REQUIRE(b1.did_intersect(Ray{{0.0f, 0.0f, 2.0f}, {1.0f, 0.0f, 0.0f}}, t, n) == false);
+  HitPoint h8 = b1.intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}});
+  HitPoint h9 = b1.intersect(Ray{{2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}});
+  HitPoint h10 = b1.intersect(Ray{{0.0f, 2.0f, 0.0f}, {1.0f, 0.0f, 0.0f}});
+  HitPoint h11 = b1.intersect(Ray{{0.0f, 2.0f, 0.0f}, {0.0f, 0.0f, 1.0f}});
+  HitPoint h12 = b1.intersect(Ray{{0.0f, 0.0f, 2.0f}, {0.0f, 1.0f, 0.0f}});
+  HitPoint h13 = b1.intersect(Ray{{0.0f, 0.0f, 2.0f}, {1.0f, 0.0f, 0.0f}});
+  REQUIRE(!h8.did_intersect);
+  REQUIRE(!h9.did_intersect);
+  REQUIRE(!h10.did_intersect);
+  REQUIRE(!h11.did_intersect);
+  REQUIRE(!h12.did_intersect);
+  REQUIRE(!h13.did_intersect);
 }
-
-/* TEST_CASE("intersect triangle", "[intersect]") {
-  auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
-                                               Color{0.1f, 0.4f, 0.9f}, 
-                                               Color{0.0f, 0.5f, 0.6f}, 10.0f);
-  Triangle t1({1, 0, 1}, {1, 0, -1}, {1, 1, 0}, "Triangle", m1);
-  Ray ray{{0, 0, 0}, {1, 0, 0}};
-  HitPoint hit = t1.intersect(ray);
-  REQUIRE(hit.did_intersect);
-  REQUIRE(hit.name == "Triangle");
-  REQUIRE(hit.direction == ray.direction);
-  REQUIRE(hit.normal.x == 1.0f);
-  REQUIRE(hit.normal.y == 0);
-  REQUIRE(hit.normal.z == 0);
-} */
