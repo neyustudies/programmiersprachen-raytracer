@@ -45,7 +45,8 @@ float Triangle::volume() const {
 HitPoint Triangle::intersect(Ray const& ray) const{
   HitPoint hit;
   Ray tray = transformRay(world_transform_inv_, ray);
-  float distance = NAN; 
+  tray.direction = glm::normalize(tray.direction);
+  float distance = 0; 
   glm::vec3 intersect(0);
   hit.did_intersect = glm::intersectRayTriangle(tray.origin, 
                                                 tray.direction, 
@@ -56,9 +57,9 @@ HitPoint Triangle::intersect(Ray const& ray) const{
     glm::vec3 dir_vec = tray.direction - tray.origin;
     glm::vec3 unit_vec(dir_vec / glm::length(dir_vec));
 
-    hit.point     = unit_vec * distance;
-    hit.direction = tray.direction;
     hit.t         = distance;
+    hit.point     = unit_vec * hit.t;
+    hit.direction = tray.direction;
     hit.name      = name_;
     hit.clr       = material_->ka;
     hit.normal    = glm::cross(v1_ - v0_, v2_ - v0_);
