@@ -2,10 +2,13 @@
 define material red 1 0 0 1 0 0 1 0 0 1
 define material blue 0 0 1 0 0 1 0 0 1 1
 
-# geometry
+# shapes
 define shape box rbottom -100 -80 -200 100 80 -100 red
 define shape sphere bsphere 0 0 -100 50 blue
 define shape triangle my_cool_triangle -1 -1 -1 4 4 4 10 20 -15 blue
+
+# composite
+define shape composite root rbottom bsphere my_cool_triangle
 
 # light
 define light sun 1000 700 0 .2 .2 .2 100
