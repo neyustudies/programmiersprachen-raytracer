@@ -4,6 +4,7 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include "triangle.hpp"
+#include "composite.hpp"
 
 
 TEST_CASE("sdf_parser", "[sdf]") {
@@ -26,7 +27,7 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(mat_blue.ks == blue);
     REQUIRE(1 == mat_blue.m);
 
-    REQUIRE(3 == s.shapes.size());
+    REQUIRE(4 == s.shapes.size());
     auto box = std::dynamic_pointer_cast<Box>(s.shapes[0]);
     REQUIRE("rbottom" == box->name());
     glm::vec3 min{-100, -80, -200};
@@ -50,6 +51,12 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(triangle_c == triangle->v2());
     REQUIRE(0 == triangle->volume());
     REQUIRE(Approx(110.397) == triangle->area());
+    auto composite = std::dynamic_pointer_cast<Composite>(s.shapes[3]);
+    REQUIRE(Approx(3723598.75) == composite->volume());
+    REQUIRE(Approx(32446.32) == composite->area());
+    REQUIRE("root" == composite->name());
+    REQUIRE(!composite->shapes().empty());
+    REQUIRE(3 == composite->shapes().size());
 
     REQUIRE(1 == s.lights.size());
     auto light = s.lights[0];
