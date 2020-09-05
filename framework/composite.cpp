@@ -6,18 +6,30 @@ Composite::Composite() :
 Composite::Composite(std::string const& name) :
   Shape{name, nullptr} {}
 
-Composite::~Composite() {}
+Composite::~Composite() {
+  shapes_.clear();
+}
+
+std::vector<std::shared_ptr<Shape>> Composite::shapes() const {
+  return shapes_;
+}
 
 void Composite::add(std::shared_ptr<Shape> const& shape) {
   shapes_.push_back(shape);
 }
 
 float Composite::area() const {
-  return 0;
+  float area = 0.0f;
+  for(auto shape : shapes_) {
+    area += shape->area();
+  } return area;
 }
 
 float Composite::volume() const {
-  return 0;
+  float volume = 0.0f;
+  for(auto shape : shapes_) {
+    volume += shape->volume();
+  } return volume;
 }
 
 /* rotate all shapes in composite */

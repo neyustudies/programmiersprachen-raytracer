@@ -10,6 +10,7 @@ class Composite : public Shape {
     Composite(std::string const& name);
     ~Composite();
     
+    std::vector<std::shared_ptr<Shape>> shapes() const;
     void add(std::shared_ptr<Shape> const& shape);
 
     float area() const override;
