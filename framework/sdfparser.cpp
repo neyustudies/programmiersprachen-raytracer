@@ -129,6 +129,29 @@ Scene read_from_sdf(std::string const& filename) {
       in >> subpixels;
       Render render{camera, filename, x_res, y_res, subpixels};
       scene.renders.push_back(render);
+    } else if ("transform" == identifier) {
+      std::string name;
+      auto it = scene.shapes.begin();
+      while ((*it)->name() != name) ++it;
+      std::shared_ptr<Shape> object = *it;
+      std::string transform_type;
+      in >> name;
+      in >> transform_type;
+      if ("rotate" == transform_type) { 
+        float angle;
+        in >> angle;
+        angle = angle / 360 * M_PI * 2;
+        auto point = parse_vec3(in);
+        object->rotate(angle, point);
+      } else if ("scale" == transform_type) {
+        auto point = parse_vec3(in);
+        object->scale(point);
+      } else if ("translate" == transform_type) {
+        auto point = parse_vec3(in);
+        object->translate(point);
+      } else {
+        warn_unknown("transform_type", name, line);
+      }
     } else {
       warn_unknown("identifier", identifier, line);
     }
