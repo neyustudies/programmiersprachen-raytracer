@@ -9,6 +9,7 @@
 #include "render.hpp"
 #include "sphere.hpp"
 #include "triangle.hpp"
+#include "composite.hpp"
 
 Color parse_color(std::istringstream &in);
 glm::vec3 parse_vec3(std::istringstream &in);
@@ -78,7 +79,14 @@ Scene read_from_sdf(std::string const& filename) {
           Triangle t{a, b, c, name, material};
           scene.shapes.push_back(std::make_shared<Triangle>(t));
         } else if ("composite" == object_name) {
-          // TODO
+          Composite c{name};
+          std::string child;
+          while (!in.eof()) {
+            in >> child;
+            auto it = scene.shapes.begin();
+            while((*it)->name() != child) ++it;
+            c.add(*it);
+          } scene.shapes.push_back(std::make_shared<Composite>(c));
         } else {
           warn_unknown("shape", object_name, line);
         }
