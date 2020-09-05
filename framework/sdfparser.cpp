@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "shape.hpp"
 #include "box.hpp"
 #include "camera.hpp"
 #include "color.hpp"
