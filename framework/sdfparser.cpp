@@ -131,19 +131,19 @@ Scene read_from_sdf(std::string const& filename) {
       Render render{camera, filename, x_res, y_res, subpixels};
       scene.renders.push_back(render);
     } else if ("transform" == identifier) {
-      std::string name;
+      std::string shape_name;
+      in >> shape_name;
       auto it = scene.shapes.begin();
-      while ((*it)->name() != name) ++it;
+      while ((*it)->name() != shape_name) ++it;
       std::shared_ptr<Shape> object = *it;
-      std::string transform_type;
-      in >> name;
+      std::string transform_type;   
       in >> transform_type;
       if ("rotate" == transform_type) { 
         float angle;
         in >> angle;
         angle = angle / 360 * M_PI * 2;
-        auto point = parse_vec3(in);
-        object->rotate(angle, point);
+        auto axis = parse_vec3(in);
+        object->rotate(angle, axis);
       } else if ("scale" == transform_type) {
         auto point = parse_vec3(in);
         object->scale(point);
@@ -151,7 +151,7 @@ Scene read_from_sdf(std::string const& filename) {
         auto point = parse_vec3(in);
         object->translate(point);
       } else {
-        warn_unknown("transform_type", name, line);
+        warn_unknown("transform_type", shape_name, line);
       }
     } else {
       warn_unknown("identifier", identifier, line);

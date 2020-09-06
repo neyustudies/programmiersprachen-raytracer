@@ -1,10 +1,13 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
+#define GLM_FORCE_RADIANS
 #include "material.hpp"
 #include "hitpoint.hpp"
 #include "ray.hpp"
+#include <glm/gtx/transform.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <glm/gtx/vector_angle.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <memory>
 
