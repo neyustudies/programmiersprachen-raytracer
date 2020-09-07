@@ -9,6 +9,7 @@
 
 #include "renderer.hpp"
 #include <glm/ext.hpp>
+#include "util.hpp"
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
     : width_(w),
@@ -81,8 +82,8 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
   Color ks_total;
   for (auto const& light : scene.lights) {
     // diffuse
-    auto hitpoint_to_light =
-        Ray{hitpoint.point, glm::normalize(light.pos - hitpoint.point)};
+    auto d = glm::normalize(light.pos - hitpoint.point);
+    auto hitpoint_to_light = Ray{hitpoint.point + (EPSILON * d), d};
     auto n = hitpoint.normal;
     auto i = hitpoint_to_light.direction;
     auto n_dot_i = glm::clamp(glm::dot(n, i), 0.f, 1.f);
