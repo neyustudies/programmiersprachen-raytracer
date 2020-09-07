@@ -27,6 +27,7 @@ void Renderer::render(Scene const& scene, Render const& r) {
         for (float sub_y = 0; sub_y < 1; sub_y += subpixel_step) {
           // TODO: trace rays
           Ray ray = r.camera->ray(x + sub_x, y + sub_y, r.x_res, r.y_res);
+          reflection_depth_ = 0;
           p.color += trace(ray, scene) * (1.f/r.subpixels);
         }
       }
@@ -108,7 +109,19 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
     }
   }
 
-  return ka_total + kd_total + ks_total;
+  Color reflection{};
+  float r = material->r;
+  if (material->r > 0) {
+    if (++reflection_depth_ < 6) {
+      auto o = hitpoint.point + (EPSILON * hitpoint.normal);
+      auto d = glm::reflect(hitpoint.direction, hitpoint.normal);
+      reflection = trace({o, d}, scene);
+    } else {
+      r = 0;
+    }
+  }
+
+  return (1.f - r) * (ka_total + kd_total + ks_total) + (r * reflection);
 }
 
 // tone mapping

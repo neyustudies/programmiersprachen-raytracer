@@ -48,7 +48,9 @@ Scene read_from_sdf(std::string const& filename) {
         auto ks = parse_color(in);
         float m;
         in >> m;
-        Material material{object_name, ka, kd, ks, m};
+        float r;
+        in >> r;
+        Material material{object_name, ka, kd, ks, m, r};
         scene.materials.emplace(object_name, material);
       } else if ("shape" == class_name) {
         std::string name;

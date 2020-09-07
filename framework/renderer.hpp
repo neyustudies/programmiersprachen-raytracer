@@ -26,6 +26,10 @@ class Renderer {
               Ray const& ray,
               HitPoint const& hitpoint,
               Scene const& scene);
+  Color reflect(int depth,
+                int max_depth,
+                std::shared_ptr<Shape> shape,
+                HitPoint const& hitpoint);
 
   void render(Scene const& scene, Render const& r);
   void write(Pixel const& p);
@@ -41,6 +45,7 @@ private:
   std::vector<Color> color_buffer_;
   std::string filename_;
   PpmWriter ppm_;
+  unsigned reflection_depth_ = 0;
   std::vector<std::shared_ptr<Shape>> shapes;
 };
 

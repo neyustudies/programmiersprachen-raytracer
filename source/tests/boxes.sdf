@@ -1,7 +1,7 @@
 # materials
-define material orange 1 .6 .2 1 .6 .2 1 .6 .2 20
-define material purple .7 .3 1 .7 .3 1 .7 .3 1 20
-define material green .5 1 .2 .5 1 .2 .5 1 .2 20
+define material orange 1 .6 .2 1 .6 .2 1 .6 .2 20 0
+define material purple .7 .3 1 .7 .3 1 .7 .3 1 20 0.3
+define material green .5 1 .2 .5 1 .2 .5 1 .2 20 0.7
 
 # geometry
 define shape box alice -80 -50 -500 -10 -10 -100 purple

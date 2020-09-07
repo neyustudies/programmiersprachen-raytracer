@@ -1,7 +1,7 @@
 # materials
-define material orange 1 .6 .2 1 .6 .2 1 .6 .2 20
-define material purple .7 .3 1 .7 .3 1 .7 .3 1 20
-define material green .5 1 .2 .5 1 .2 .5 1 .2 20
+define material orange 1 .6 .2 1 .6 .2 1 .6 .2 20 0
+define material purple .7 .3 1 .7 .3 1 .7 .3 1 20 0.3
+define material green .5 1 .2 .5 1 .2 .5 1 .2 20 0.7
 
 # geometry
 define shape sphere bsphere 0 0 -100 50 purple
@@ -18,7 +18,8 @@ ambient .1 0 .1
 # camera
 define camera eye 45.0 0 0 0 0 0 -1 0 1 0
 
+render eye image.ppm 300 200 1
 # render eye image.ppm 900 600 1
 # render eye image.ppm 1200 800 1
-render eye image.ppm 2940 1960 1
+# render eye image.ppm 2940 1960 1
 # render eye image.ppm 3840 2160 1

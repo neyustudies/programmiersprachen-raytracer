@@ -1,7 +1,7 @@
 # materials
-define material orange 1 .6 .2 1 .6 .2 1 .6 .2 20
-define material purple .7 .3 1 .7 .3 1 .7 .3 1 5
-define material green .5 1 .2 .5 1 .2 .5 1 .2 20
+define material orange 1 .6 .2 1 .6 .2 1 .6 .2 20 0
+define material purple .7 .3 1 .7 .3 1 .7 .3 1 5 0.3
+define material green .5 1 .2 .5 1 .2 .5 1 .2 20 0.7
 
 # geometry
 define shape triangle bsphere    0 5 -10   -10 -10 -10   10 -10 -10   purple
