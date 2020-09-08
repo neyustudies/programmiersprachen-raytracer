@@ -127,9 +127,8 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
 
   Color refraction{};
   float o = material->opacity;
-  std::cout << o << "\n";
   if (material->opacity < 1) {
-    auto d = hitpoint.direction;  // TODO snell
+    auto d = glm::refract(hitpoint.direction, hitpoint.normal, material->n);
     refraction = trace({hitpoint.point, d}, scene, shape);
   }
   return o * with_reflection + (1.f - o) * refraction;
