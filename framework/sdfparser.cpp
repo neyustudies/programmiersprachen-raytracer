@@ -10,6 +10,7 @@
 #include "render.hpp"
 #include "sphere.hpp"
 #include "triangle.hpp"
+#include "cone.hpp"
 #include "composite.hpp"
 
 Color parse_color(std::istringstream &in);
@@ -81,6 +82,13 @@ Scene read_from_sdf(std::string const& filename) {
             continue;
           Triangle t{a, b, c, name, material};
           scene.shapes.push_back(std::make_shared<Triangle>(t));
+        } else if ("cone" == object_name) {
+          auto base = parse_vec3(in);
+          float radius, height;
+          in >> radius >> height;
+          auto material = parse_material(in, scene, line);
+          Cone c{base, radius, height, name, material};
+          scene.shapes.push_back(std::make_shared<Cone>(c));
         } else if ("composite" == object_name) {
           Composite c{name};
           std::string child;
