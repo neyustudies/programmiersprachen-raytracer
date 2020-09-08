@@ -26,4 +26,9 @@ class Cone : public Shape {
 
 };
 
+struct Plane {
+  glm::vec3 origin;
+	glm::vec3 normal;
+};
+
 #endif // CONE_HPP
