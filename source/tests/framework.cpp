@@ -109,7 +109,7 @@ TEST_CASE("intersect sphere", "[intersect]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f},
-                                               10.0f, 42.f);
+                                               10.0f, 42.f, 1.f, 1.f);
   SECTION("intersected sphere") {
     Sphere sphere{{0,0,5},1,"Kugel", m1};
     Ray ray{{0,0,0},{0,0,1}};
@@ -150,7 +150,7 @@ TEST_CASE("intersect sphere2", "[intersect]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f},
-                                               10.0f, 42.f);
+                                               10.0f, 42.f, 1.f, 1.f);
   Sphere s1{glm::vec3{1, 1, 1}, 2.0f, "h", m1};
   Ray ray{{1, 1, 1}, {-1, -1, -1}};
   HitPoint hit = s1.intersect(ray);
@@ -190,9 +190,11 @@ TEST_CASE("material constructor", "[material]") {
     REQUIRE(m1.ks.b == 0.0f);
     REQUIRE(m1.m    == 1.0f);
     REQUIRE(m1.r    == 0.0f);
+    REQUIRE(m1.opacity == 1.0f);
+    REQUIRE(m1.n    == 1.5f);
   }
   SECTION("material with given values") {
-    Material m2{"Test", {0.7f, 0.1f, 0.2f}, {1.0f, 0.9f, 1.1f}, {0.0f, 0.1f, 0.2f}, 10.0f, 42.f};
+    Material m2{"Test", {0.7f, 0.1f, 0.2f}, {1.0f, 0.9f, 1.1f}, {0.0f, 0.1f, 0.2f}, 10.0f, 42.f, 0.6f, 1.4f};
     REQUIRE(m2.name.compare("Test") == 0);
     REQUIRE(m2.ka.r == 0.7f);
     REQUIRE(m2.ka.g == 0.1f);
@@ -205,6 +207,8 @@ TEST_CASE("material constructor", "[material]") {
     REQUIRE(m2.ks.b == 0.2f);
     REQUIRE(m2.m    == 10.0f);
     REQUIRE(m2.r    == 42.0f);
+    REQUIRE(m2.opacity == .6f);
+    REQUIRE(m2.n    == 1.4f);
   }
 }
 
@@ -212,7 +216,7 @@ TEST_CASE("material constructor", "[material]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f},
-                                               10.0f, 42.f);
+                                               10.0f, 42.f, 1.f, 1.f);
   SECTION("box constructor with material") {
     Box b1{};
     REQUIRE(b1.material() == nullptr);
@@ -253,7 +257,7 @@ TEST_CASE("intersect Box", "[intersect]") {
   auto m1 = std::make_shared<Material>("Test", Color{0.2f, 0.3f, 0.8f}, 
                                                Color{0.1f, 0.4f, 0.9f}, 
                                                Color{0.0f, 0.5f, 0.6f},
-                                               10.0f, 42.f);
+                                               10.0f, 42.f, 1.f, 1.f);
   Box b1{{-1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, 1.0f}, "Box", m1};
   /* testing ray inside */
   HitPoint h1 = b1.intersect(Ray{{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}});

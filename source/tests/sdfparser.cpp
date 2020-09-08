@@ -21,6 +21,9 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(mat_red.ks == red);
     REQUIRE(1 == mat_red.m);
     REQUIRE(0.f == mat_red.r);
+    REQUIRE(1 == Approx(mat_red.opacity));
+    REQUIRE(1 == Approx(mat_red.n));
+
     auto mat_blue = s.materials.find("blue")->second;
     REQUIRE("blue" == mat_blue.name);
     Color blue{0, 0, 1};
@@ -29,6 +32,8 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(mat_blue.ks == blue);
     REQUIRE(1 == mat_blue.m);
     REQUIRE(0.42f == Approx(mat_blue.r));
+    REQUIRE(.5f == Approx(mat_blue.opacity));
+    REQUIRE(1.3f == Approx(mat_blue.n));
 
     REQUIRE(5 == s.shapes.size());
     auto box = std::dynamic_pointer_cast<Box>(s.shapes[0]);
