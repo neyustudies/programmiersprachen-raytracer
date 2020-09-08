@@ -51,7 +51,11 @@ Scene read_from_sdf(std::string const& filename) {
         in >> m;
         float r;
         in >> r;
-        Material material{object_name, ka, kd, ks, m, r};
+        float opacity;
+        in >> opacity;
+        float n;
+        in >> n;
+        Material material{object_name, ka, kd, ks, m, r, opacity, n};
         scene.materials.emplace(object_name, material);
       } else if ("shape" == class_name) {
         std::string name;

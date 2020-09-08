@@ -27,7 +27,7 @@ void Renderer::render(Scene const& scene, Render const& r) {
         for (float sub_y = 0; sub_y < 1; sub_y += subpixel_step) {
           // TODO: trace rays
           Ray ray = r.camera->ray(x + sub_x, y + sub_y, r.x_res, r.y_res);
-          reflection_depth_ = 0;
+          recursion_depth_ = 0;
           p.color += trace(ray, scene) * (1.f/r.subpixels);
         }
       }
@@ -53,12 +53,16 @@ void Renderer::write(Pixel const& p) {
   ppm_.write(p);
 }
 
-Color Renderer::trace(Ray const& ray, Scene const& scene) {
+Color Renderer::trace(Ray const& ray,
+                      Scene const& scene,
+                      std::shared_ptr<Shape> exclude) {
   HitPoint closest_hitpoint;
   closest_hitpoint.t = INFINITY;
   std::shared_ptr<Shape> closest_shape = nullptr;
 
   for (std::shared_ptr<Shape> const& shape : scene.shapes) {
+    if (shape == exclude)
+      continue;
     HitPoint hitpoint = shape->intersect(ray);
     if (hitpoint.did_intersect && closest_hitpoint.t > hitpoint.t) {
       closest_hitpoint = hitpoint;
@@ -109,19 +113,28 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
     }
   }
 
+  Color phong = ka_total + kd_total + ks_total;
+  if (++recursion_depth_ > 6)
+    return phong;
+
   Color reflection{};
   float r = material->r;
   if (material->r > 0) {
-    if (++reflection_depth_ < 6) {
-      auto o = hitpoint.point + (EPSILON * hitpoint.normal);
-      auto d = glm::reflect(hitpoint.direction, hitpoint.normal);
-      reflection = trace({o, d}, scene);
-    } else {
-      r = 0;
-    }
+    auto d = glm::reflect(hitpoint.direction, hitpoint.normal);
+    reflection = trace({hitpoint.point, d}, scene, shape);
   }
+  Color with_reflection{(1.f - r) * phong + (r * reflection)};
 
-  return (1.f - r) * (ka_total + kd_total + ks_total) + (r * reflection);
+  Color refraction{};
+  float o = material->opacity;
+  std::cout << o << "\n";
+  if (material->opacity < 1) {
+    auto d = hitpoint.direction;  // TODO snell
+    refraction = trace({hitpoint.point, d}, scene, shape);
+  }
+  return o * with_reflection + (1.f - o) * refraction;
+
+  // return (1.f - material->opacity) * behind + material->opacity * color;
 }
 
 // tone mapping
