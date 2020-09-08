@@ -4,6 +4,7 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include "triangle.hpp"
+#include "cone.hpp"
 #include "composite.hpp"
 
 
@@ -29,7 +30,7 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(1 == mat_blue.m);
     REQUIRE(0.42f == Approx(mat_blue.r));
 
-    REQUIRE(4 == s.shapes.size());
+    REQUIRE(5 == s.shapes.size());
     auto box = std::dynamic_pointer_cast<Box>(s.shapes[0]);
     REQUIRE("rbottom" == box->name());
     glm::vec3 min{-100, -80, -200};
@@ -53,7 +54,17 @@ TEST_CASE("sdf_parser", "[sdf]") {
     REQUIRE(triangle_c == triangle->v2());
     REQUIRE(0 == triangle->volume());
     REQUIRE(Approx(110.397) == triangle->area());
-    auto composite = std::dynamic_pointer_cast<Composite>(s.shapes[3]);
+    auto cone = std::dynamic_pointer_cast<Cone>(s.shapes[3]);
+    glm::vec3 base{0, -50, -20};
+    REQUIRE(base.x == cone->base().x);
+    REQUIRE(base.y == cone->base().y);
+    REQUIRE(base.z == cone->base().z);
+    float radius = 400.f;
+    float height = 600.f;
+    REQUIRE(radius == cone->radius());
+    REQUIRE(height == cone->height());
+    REQUIRE(mat_red == *(cone->material()));
+    auto composite = std::dynamic_pointer_cast<Composite>(s.shapes[4]);
     REQUIRE(Approx(3723598.75) == composite->volume());
     REQUIRE(Approx(32446.32) == composite->area());
     REQUIRE("root" == composite->name());
