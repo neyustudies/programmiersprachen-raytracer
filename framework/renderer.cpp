@@ -128,8 +128,20 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
   Color refraction{};
   float o = material->opacity;
   if (material->opacity < 1) {
-    auto d = glm::refract(hitpoint.direction, hitpoint.normal, material->n);
-    refraction = trace({hitpoint.point, d}, scene, shape);
+    auto direction_internal = glm::normalize(
+        glm::refract(hitpoint.direction, hitpoint.normal, 1.f / material->n));
+    Ray ray_internal{hitpoint.point + EPSILON * direction_internal,
+                     direction_internal};
+    auto hit_exit = shape->intersect(ray_internal);
+    if (hit_exit.did_intersect) {
+      auto direction_exit = glm::normalize(glm::refract(
+          hit_exit.direction, -hit_exit.normal, 1.f / material->n));
+      std::cout << "direction_exit = " << direction_exit << "\n";
+      std::cout << "hit_exit.direction = " << hit_exit.direction << "\n";
+      std::cout << "hit_exit.normal = " << hit_exit.normal << "\n\n";
+      Ray ray_exit{hit_exit.point, direction_exit};
+      refraction = trace(ray_exit, scene, shape);
+    }
   }
   return o * with_reflection + (1.f - o) * refraction;
 
