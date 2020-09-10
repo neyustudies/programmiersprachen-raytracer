@@ -136,7 +136,7 @@ Color Renderer::shade(std::shared_ptr<Shape> shape,
     if (hit_exit.did_intersect) {
       auto direction_exit = glm::normalize(glm::refract(
           hit_exit.direction, -hit_exit.normal, 1.f / material->n));
-      Ray ray_exit{hit_exit.point, direction_exit};
+      Ray ray_exit{hit_exit.point + EPSILON * direction_exit, direction_exit};
       refraction = trace(ray_exit, scene, shape);
     }
   }
