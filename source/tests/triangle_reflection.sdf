@@ -5,10 +5,11 @@ define material green  .5  1 .2    .5  1 .2   .5 .8 .2    20  .2    .6    1.2
 define material xx      5  3 .2    .5  1 .2   .5 .8 .2    30  .8    .6     .9
 define material xc      0  0  2    .1 .6 .9    1 .6 .3    20  .1    .8    1
 define material aa      0  4  2    .1 .6 .9    1 .6 .3    20  .1    .8    1
-define material mirror      0 0 0 0 0 0 0 0 0 1  0.7    1    1
+define material mirror      0 0 0 0 0 0 0 0 0 1  0.7    1    1.1
 
 # geometry
 # define shape sphere   big      0 -10 -100 35                    violet
+define shape sphere   egg_behind_triangle      -150  50 -600   130                    cyan
 define shape sphere   egg      5  -5 -17   5                    cyan
 define shape sphere   mirroregg      -20  15 -20  10                    mirror
 # define shape sphere   above  -15  20 -35   8                    xc
