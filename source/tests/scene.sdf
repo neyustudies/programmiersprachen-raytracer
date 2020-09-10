@@ -10,13 +10,13 @@ define material aa      0  4  2    .1 .6 .9    1 .6 .3    20  .1    .8    1
 define shape sphere   big      0 -10 -100 35                    violet
 define shape sphere   egg      5  -5 -17   5                    cyan
 define shape sphere   above  -15  20 -35   8                    xc
-define shape sphere   behind -10   0 -20   4                    aa
+# define shape sphere   behind  -4   0 -8   2                    aa
 define shape box      alice   10  10 -200 80 50 -120            xc
-define shape triangle bob    -10  20 -30 -10 -20 8 -10 -20 -30  xx
+define shape triangle bob    -10  20 -30 -5 -20 8 -10 -20 -30   xx
 
 # composite
-define shape composite circles big egg above behind
-define shape composite root big egg above behind bob
+define shape composite circles big egg above
+define shape composite root big egg above bob
 
 # light
 define light sun 800 1500 -100 0 1 0.6 3

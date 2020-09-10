@@ -5,19 +5,24 @@ define material green  .5  1 .2    .5  1 .2   .5 .8 .2    20  .2    .6    1.2
 define material xx      5  3 .2    .5  1 .2   .5 .8 .2    30  .8    .6     .9
 define material xc      0  0  2    .1 .6 .9    1 .6 .3    20  .1    .8    1
 define material aa      0  4  2    .1 .6 .9    1 .6 .3    20  .1    .8    1
-define material mirror      0 0 0 0 0 0 0 0 0 1  0.7    1    1.1
+
+define material black 0 0 0 0 0 0 0 0 0 0 1 1
 
 # geometry
 # define shape sphere   big      0 -10 -100 35                    violet
-define shape sphere   egg_behind_triangle      -150  50 -600   130                    cyan
-define shape sphere   egg      5  -5 -17   5                    cyan
-define shape sphere   mirroregg      -20  15 -20  10                    mirror
+# define shape sphere   egg_behind_triangle      -150  50 -600   130                    cyan
+# define shape sphere   egg      5  -5 -17   5                    cyan
+# define shape sphere   mirroregg      -20  15 -20  10                    mirror
 # define shape sphere   above  -15  20 -35   8                    xc
 # define shape sphere   behind -10   0 -20   4                    aa
 # define shape box      alice   10  10 -200 80 50 -120            xc
 # define shape triangle bob    -10  20 -30 -10 -20 8 -10 -20 -30  aa
 
-define shape triangle back -180 -100 -200 200 -130 -220 60 130 -220 mirror
+define material mirror      0 0 0 0 0 0 0 0 0 1  0.7    1    1.1
+define shape triangle floor -300 0 10 300 0 10 0 -5 -300 mirror
+define shape sphere test 0 5 -20 2.5 violet
+
+# define shape sphere bernd -5 5 -20 1 black
 
 # composite
 #define shape composite circles big egg above behind
@@ -35,13 +40,14 @@ ambient .08 0 .2
 # 1 2 5
 
 # camera
-define camera eye2 45.0 0 0 20 0 0 -1 0 1 0
 define camera eye 45.0 0 0 0 0 0 -1 0 1 0
+define camera eye2 45.0 0 0 -10 0 0 -1 0 1 0
 
-# render eye e.ppm 300 200 1
+render eye e.ppm 900 600 1
 render eye2 f.ppm 900 600 1
 
 # render eye image.ppm 600 400 1
 # render eye image.ppm 900 600 1
 # render eye image.ppm 1200 800 3
 # render eye image.ppm 3840 2560 1
+

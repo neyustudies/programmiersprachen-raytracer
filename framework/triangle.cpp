@@ -57,7 +57,7 @@ HitPoint Triangle::intersect(Ray const& ray) const{
     hit.direction = tray.direction;
     hit.name      = name_;
     hit.clr       = material_->ka;
-    hit.normal    = glm::cross(v1_ - v0_, v2_ - v0_);
+    hit.normal    = -glm::cross(v1_ - v0_, v2_ - v0_);
   }
 
   transformBack(hit, world_transform_, glm::transpose(world_transform_inv_));
