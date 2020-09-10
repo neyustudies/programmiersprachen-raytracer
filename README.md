@@ -58,4 +58,4 @@ define camera  eye 45.0 0.0 0.0 0.0 0.0 0.0 -1.0 0.0 1.0 0.0
 render    eye simple3.ppm    900 600         1
 ```
 
-![refraction demo](doc/lens.png)
+![refraction demo](doc/lens.png#)
