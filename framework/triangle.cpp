@@ -46,19 +46,18 @@ HitPoint Triangle::intersect(Ray const& ray) const{
   HitPoint hit;
   Ray tray = transformRay(world_transform_inv_, ray);
   tray.direction = glm::normalize(tray.direction);
-  float distance = 0; 
-  glm::vec3 intersect(0);
+  glm::vec3 bary_pos(0);
   hit.did_intersect = glm::intersectRayTriangle(tray.origin, 
                                                 tray.direction, 
                                                 v0_, v1_, v2_, 
-                                                intersect);
+                                                bary_pos);
   if(hit.did_intersect) {
-    // 3d intersection point of ray and triangle
-    glm::vec3 dir_vec = tray.direction - tray.origin;
-    glm::vec3 unit_vec(dir_vec / glm::length(dir_vec));
+    auto intersection_pt =
+      v0_ * bary_pos.x + v1_ * bary_pos.y + v2_ * bary_pos.z;
+    float distance = glm::length(tray.origin - intersection_pt);
 
     hit.t         = distance;
-    hit.point     = unit_vec * hit.t;
+    hit.point     = intersection_pt;
     hit.direction = tray.direction;
     hit.name      = name_;
     hit.clr       = material_->ka;
