@@ -67,7 +67,7 @@ TEST_CASE("construct a box object", "[constructor]" ) {
   REQUIRE(b3.area() == 1590.0f);
   REQUIRE(b3.volume() == 17671796.0f);
   REQUIRE(b4.max().x == 1.0f);
-  REQUIRE(b4.max().y == 1.0f);
+  REQUIRE(b4.max().y == 100.f);
   REQUIRE(b4.max().z == 3.0f);
   REQUIRE(b4.area() == Approx(822.6f));
   REQUIRE(b4.volume() == Approx(270240.3f));
