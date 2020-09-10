@@ -99,9 +99,15 @@ Scene read_from_sdf(std::string const& filename) {
           while (!in.eof()) {
             in >> child;
             auto it = scene.shapes.begin();
-            while((*it)->name() != child) ++it;
-            c.add(*it);
-          } scene.shapes.push_back(std::make_shared<Composite>(c));
+            if (it == scene.shapes.end()) continue;
+            while(nullptr != *it && (*it)->name() != child) ++it;
+            if (scene.shapes.end() == it) {
+              warn_unknown("shape", child, line);
+            } else {
+              c.add(*it);
+            }
+          }
+          scene.shapes.push_back(std::make_shared<Composite>(c));
         } else {
           warn_unknown("shape", object_name, line);
         }
