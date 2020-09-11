@@ -2,6 +2,7 @@
 #define CAMERA_HPP
 #include "ray.hpp"
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 #include <string>
 
 class Camera {
@@ -35,6 +36,8 @@ class Camera {
     glm::vec3 dir_;
     /** Up direction (used for rotation, default towards positive y) */
     glm::vec3 up_;
+    /** Camera transformation matrix. */
+    glm::mat4x4 transform_;
 
 };
 
