@@ -43,7 +43,7 @@ jobs:
 
     - name: test render
       run: |
-          build/source/raytracer source/tests/simple2.sdf
+          build/source/raytracer sdf/scene.sdf
           convert image.ppm render.png
 
     - name: upload test render
