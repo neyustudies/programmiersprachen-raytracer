@@ -28,7 +28,8 @@ $ ./raytracer ../../source/tests/simple3.sdf
 Rendering scene to 'image.ppm'...
 ```
 
-![example render](doc/simple3.png)
+![example render](doc/scene.png)
+![another example render](doc/simple3.png)
 
 ## SDF (Scene Description Format)
 
