@@ -24,7 +24,7 @@ std::shared_ptr<Material> const& Shape::material() const {
 /* positive angle corresponds to a counterclockwise rotation
    when looking from the positive axis towards the origin */
 void Shape::rotate(float& angle, glm::vec3 const& axis) {
-  world_transform_ = glm::rotate(world_transform_, glm::radians(angle), axis);
+  world_transform_ = glm::rotate(world_transform_, angle, axis);
   world_transform_inv_ = glm::inverse(world_transform_);
 }
 
