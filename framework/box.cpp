@@ -89,14 +89,12 @@ Box::Box(glm::vec3 const& min,
   }
 
   HitPoint Box::intersect(Ray const& ray) const {
-    material_->ks = Color{};  // XXX TODO remove when specular on boxes is fixed
-
     if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0)
       throw "direction should not be zero";
 
     Ray tray = transformRay(world_transform_inv_, ray);
 
-    auto hit = hitpoint(ray);
+    auto hit = hitpoint(tray);
 
     transformBack(hit, world_transform_, glm::transpose(world_transform_inv_));
     return hit;
