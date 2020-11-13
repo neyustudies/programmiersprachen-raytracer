@@ -19,7 +19,8 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
       ppm_(width_, height_) {}
 
 void Renderer::render(Scene const& scene, Render const& r) {
-  for (unsigned y = 0; y < height_; ++y) {
+#pragma omp parallel for collapse(2)
+  for (unsigned y = 0; y < height_; ++y)
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p{x, y};
       float subpixel_step = (1.f/std::sqrt(r.subpixels));
@@ -35,7 +36,6 @@ void Renderer::render(Scene const& scene, Render const& r) {
 
       write(p);
     }
-  }
   ppm_.save(filename_);
 }
 
