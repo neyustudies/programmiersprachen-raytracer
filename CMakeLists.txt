@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-cmake_policy(VERSION 2.8)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_policy(VERSION 3.10)
 
 set(FRAMEWORK_NAME framework)
 
@@ -24,7 +24,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external)
 add_definitions(-DGLEW_STATIC)
 
 # build GLFW
-set(GLFW_DIRECTORY glfw-3.2.1)
+set(GLFW_DIRECTORY glfw-3.4)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/${GLFW_DIRECTORY}/include)
 
 set(GLFW_INSTALL OFF CACHE STRING "" FORCE)
